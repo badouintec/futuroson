@@ -1,0 +1,221 @@
+/* styles.css */
+
+/* Estilos generales */
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding-top: 70px; /* Para compensar la altura de la barra de navegación fija */
+    overflow-x: hidden; /* Evita el scroll horizontal */
+}
+
+/* Barra de navegación */
+.navbar {
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.navbar-brand img {
+    margin-right: 10px;
+}
+
+.navbar-nav .nav-link {
+    font-size: 1.1rem;
+    margin-left: 1rem;
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: 700;
+}
+
+/* Sección Hero */
+.hero-section {
+    background: linear-gradient(rgba(0, 50, 100, 0.6), rgba(0, 50, 100, 0.6)), url('https://via.placeholder.com/1920x1080') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-section h1 {
+    font-size: 4rem;
+    animation: fadeInDown 1s;
+}
+
+.hero-section .lead {
+    font-size: 1.5rem;
+    animation: fadeInUp 1s;
+}
+
+.hero-section .btn {
+    font-size: 1.2rem;
+    animation: fadeInUp 1s;
+}
+
+/* Animaciones */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Sección de Indicadores */
+#indicadores h2 {
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.kpi-card {
+    background-color: #fff;
+    padding: 2rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100%;
+}
+
+.kpi-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #007bff;
+    margin: 0;
+}
+
+/* Gráficas */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        height: 250px;
+    }
+}
+
+/* Sectores Clave */
+.sector-card {
+    text-align: center;
+}
+
+.sector-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.sector-card h4 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.sector-card p {
+    color: #555;
+}
+
+.btn-outline-primary {
+    border-radius: 0.5rem;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Cultura y Turismo */
+.atractivo-card {
+    text-align: center;
+}
+
+.atractivo-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.atractivo-card h5 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.atractivo-card p {
+    color: #555;
+}
+
+/* Sección Contacto */
+#contacto h2 {
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+#contacto h5 {
+    font-weight: 700;
+}
+
+#contacto .form-control {
+    border-radius: 0.5rem;
+}
+
+#contacto .btn {
+    border-radius: 0.5rem;
+}
+
+.social-icons a {
+    color: #333;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #007bff;
+}
+
+/* Pie de página */
+footer {
+    background-color: #343a40;
+    color: #fff;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsividad */
+@media (max-width: 992px) {
+    .hero-section {
+        height: 80vh;
+    }
+
+    .hero-section h1 {
+        font-size: 3rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .navbar-nav .nav-link {
+        margin-left: 0;
+    }
+
+    .kpi-number {
+        font-size: 2rem;
+    }
+}

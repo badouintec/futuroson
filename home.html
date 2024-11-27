@@ -1,0 +1,278 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sonora a prueba de futuro</title>
+    <!-- Meta etiquetas para responsividad -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Enlace a Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace al archivo CSS personalizado -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Enlace a AOS para animaciones al hacer scroll -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <!-- Enlace a Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Enlace a Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <img src="https://via.placeholder.com/40" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+                Sonora a prueba de futuro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav text-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="home.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="indicadores.html">Indicadores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sectores.html">Sectores Clave</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cultura.html">Cultura y Turismo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="geovisor.html">Geovisor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección Hero -->
+    <section class="hero-section text-white text-center d-flex align-items-center">
+        <div class="container" data-aos="fade-up">
+            <h1 class="display-4 fw-bold">
+                <span id="typed"></span>
+            </h1>
+            <p class="lead">Impulsamos el desarrollo económico y social de Sonora mediante inteligencia territorial y ciencia de datos, proporcionando información clave para inversionistas y emprendedores.</p>
+            <a href="#indicadores" class="btn btn-primary btn-lg mt-3"><i class="fas fa-arrow-down"></i> Explorar</a>
+        </div>
+    </section>
+
+    <!-- Sección de Indicadores -->
+    <section id="indicadores" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Indicadores Económicos Clave</h2>
+            <!-- KPIs -->
+            <div class="row text-center g-4">
+                <!-- KPI Animado -->
+                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="kpi-card h-100">
+                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                        <h5>PIB Estatal</h5>
+                        <p class="kpi-number" data-target="35000" data-unit=" M USD">0 M USD</p>
+                    </div>
+                </div>
+                <!-- KPI Animado -->
+                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="kpi-card h-100">
+                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                        <h5>Población</h5>
+                        <p class="kpi-number" data-target="3025000" data-unit=" habitantes">0 habitantes</p>
+                    </div>
+                </div>
+                <!-- KPI Animado -->
+                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="kpi-card h-100">
+                        <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
+                        <h5>Tasa de Empleo</h5>
+                        <p class="kpi-number" data-target="96.5" data-unit="%">0%</p>
+                    </div>
+                </div>
+                <!-- KPI Animado -->
+                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="kpi-card h-100">
+                        <i class="fas fa-globe fa-3x text-primary mb-3"></i>
+                        <h5>IDH</h5>
+                        <p class="kpi-number" data-target="0.82">0</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Gráficas -->
+            <div class="row mt-5">
+                <div class="col-md-6" data-aos="fade-right">
+                    <h4 class="text-center">Crecimiento del PIB</h4>
+                    <div class="chart-container">
+                        <canvas id="pibChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <h4 class="text-center">Tasa de Desempleo</h4>
+                    <div class="chart-container">
+                        <canvas id="desempleoChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Botón Ver más -->
+            <div class="text-center mt-4">
+                <a href="indicadores.html" class="btn btn-outline-primary">Ver más</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Sectores Clave -->
+    <section id="sectores" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Sectores Económicos Clave</h2>
+            <div class="row">
+                <!-- Sector 1 -->
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="sector-card">
+                        <img src="https://via.placeholder.com/800x600" class="img-fluid rounded mb-3" alt="Agricultura">
+                        <h4>Agricultura</h4>
+                        <p>Sonora es líder en producción agrícola gracias a su clima y tecnología de punta.</p>
+                        <a href="agricultura.html" class="btn btn-outline-primary">Ver más</a>
+                    </div>
+                </div>
+                <!-- Sector 2 -->
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="sector-card">
+                        <img src="https://via.placeholder.com/800x600" class="img-fluid rounded mb-3" alt="Minería">
+                        <h4>Minería</h4>
+                        <p>Importante productor de minerales como cobre, oro y plata, con prácticas sostenibles.</p>
+                        <a href="mineria.html" class="btn btn-outline-primary">Ver más</a>
+                    </div>
+                </div>
+                <!-- Sector 3 -->
+                <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="sector-card">
+                        <img src="https://via.placeholder.com/800x600" class="img-fluid rounded mb-3" alt="Energías Renovables">
+                        <h4>Energías Renovables</h4>
+                        <p>Aprovechando el sol y el viento para generar energía limpia y sustentable.</p>
+                        <a href="energias.html" class="btn btn-outline-primary">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Botón Ver más -->
+            <div class="text-center mt-4">
+                <a href="sectores.html" class="btn btn-outline-primary">Ver todos los sectores</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Cultura y Turismo -->
+    <section id="cultura" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Cultura y Turismo</h2>
+            <div class="row">
+                <!-- Atractivo 1 -->
+                <div class="col-md-4 mb-4" data-aos="flip-left" data-aos-delay="100">
+                    <div class="atractivo-card">
+                        <img src="https://via.placeholder.com/800x600" class="img-fluid rounded mb-3" alt="Desierto de Sonora">
+                        <h5>Desierto de Sonora</h5>
+                        <p>Paisajes impresionantes y una biodiversidad única en el mundo.</p>
+                    </div>
+                </div>
+                <!-- Atractivo 2 -->
+                <div class="col-md-4 mb-4" data-aos="flip-left" data-aos-delay="200">
+                    <div class="atractivo-card">
+                        <img src="https://via.placeholder.com/800x600" class="img-fluid rounded mb-3" alt="Puerto Peñasco">
+                        <h5>Puerto Peñasco</h5>
+                        <p>Playas paradisíacas en el Mar de Cortés, ideales para relajarse y disfrutar.</p>
+                    </div>
+                </div>
+                <!-- Atractivo 3 -->
+                <div class="col-md-4 mb-4" data-aos="flip-left" data-aos-delay="300">
+                    <div class="atractivo-card">
+                        <img src="https://via.placeholder.com/800x600" class="img-fluid rounded mb-3" alt="Cultura Yaqui">
+                        <h5>Cultura Yaqui</h5>
+                        <p>Rica herencia indígena con tradiciones y festivales que perduran en el tiempo.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Botón Ver más -->
+            <div class="text-center mt-4">
+                <a href="cultura.html" class="btn btn-outline-primary">Ver más</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Geovisor -->
+    <section id="geovisor" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Geovisor Interactivo</h2>
+            <p class="text-center">Explora oportunidades de negocio y analiza datos geoespaciales para tomar decisiones informadas.</p>
+            <div class="text-center mt-4">
+                <a href="geovisor.html" class="btn btn-outline-primary btn-lg">Acceder al Geovisor</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Contacto -->
+    <section id="contacto" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Contáctanos</h2>
+            <div class="row">
+                <div class="col-md-6" data-aos="fade-right">
+                    <h5>Oficina de Desarrollo Económico</h5>
+                    <p>Dirección: Calle Ejemplo 123, Hermosillo, Sonora, México</p>
+                    <p><i class="fas fa-phone-alt"></i> (662) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> contacto@sonorapruebafuturo.mx</p>
+                    <!-- Redes Sociales -->
+                    <div class="social-icons mt-4">
+                        <a href="#" class="me-3"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-twitter fa-2x"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-linkedin fa-2x"></i></a>
+                        <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <form id="contactForm">
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="email" placeholder="tu@correo.com" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Enviar</button>
+                        <div class="mt-3" id="formMessage"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Sonora a prueba de futuro. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Enlace a Bootstrap JS y dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Enlace a AOS JS para animaciones -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <!-- Enlace a Typed.js para animación de texto -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <!-- Enlace a Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Enlace al archivo JavaScript principal -->
+    <script src="main.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>

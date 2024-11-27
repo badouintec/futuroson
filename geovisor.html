@@ -1,0 +1,269 @@
+<!-- geovisor.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Geovisor Interactivo - Sonora a prueba de futuro</title>
+    <!-- Meta etiquetas para responsividad -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Enlaces a Bootstrap CSS y otros estilos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Enlace a Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Enlace al archivo CSS personalizado -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Enlace a AOS para animaciones al hacer scroll -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <!-- Enlace a Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Enlace a Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <img src="https://via.placeholder.com/40" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+                Sonora a prueba de futuro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegación">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav text-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="indicadores.html">Indicadores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sectores.html">Sectores Clave</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cultura.html">Cultura y Turismo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="geovisor.html">Geovisor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección del Geovisor -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5" data-aos="fade-up">Geovisor Interactivo</h2>
+            <div class="row">
+                <!-- Mapa -->
+                <div class="col-md-8 mb-4">
+                    <div id="map" style="width: 100%; height: 600px;"></div>
+                </div>
+                <!-- Panel de Control -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm" data-aos="fade-left">
+                        <div class="card-body">
+                            <h5 class="card-title">Filtros</h5>
+                            <form id="filterForm">
+                                <div class="mb-3">
+                                    <label for="actividad" class="form-label">Actividad Económica</label>
+                                    <select class="form-select" id="actividad">
+                                        <option value="">Todas</option>
+                                        <!-- Opciones dinámicas -->
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="municipio" class="form-label">Municipio</label>
+                                    <select class="form-select" id="municipio">
+                                        <option value="">Todos</option>
+                                        <!-- Opciones dinámicas -->
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="personal" class="form-label">Personal Ocupado</label>
+                                    <select class="form-select" id="personal">
+                                        <option value="">Todos</option>
+                                        <option value="1">0 a 5</option>
+                                        <option value="2">6 a 10</option>
+                                        <option value="3">11 a 30</option>
+                                        <option value="4">31 a 50</option>
+                                        <option value="5">51 a 100</option>
+                                        <option value="6">101 a 250</option>
+                                        <option value="7">251 y más</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tabla de Datos -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <h4>Listado de Unidades Económicas</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Actividad</th>
+                                    <th>Municipio</th>
+                                    <th>Personal Ocupado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Filas dinámicas -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Sonora a prueba de futuro. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Enlace a Bootstrap JS y dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Enlace a Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Enlace a D3.js para leer el CSV -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Enlace a AOS JS para animaciones -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <!-- Enlace al archivo JavaScript principal -->
+    <script src="main.js"></script>
+    <!-- Script específico para el Geovisor -->
+    <script>
+        AOS.init();
+
+        // Inicialización del mapa
+        var map = L.map('map').setView([29.297224, -110.330881], 7);
+
+        // Capa base del mapa
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Capa de marcadores
+        var markersLayer = L.markerClusterGroup();
+
+        // Variables para almacenar los datos
+        var datos = [];
+        var actividades = new Set();
+        var municipios = new Set();
+
+        // Función para cargar y procesar los datos del CSV
+        d3.csv("datos_denue.csv").then(function(data) {
+            datos = data;
+
+            // Poblar opciones de filtros
+            data.forEach(function(d) {
+                actividades.add(d.nombre_act);
+                municipios.add(d.municipio);
+            });
+
+            actividades.forEach(function(act) {
+                var option = document.createElement('option');
+                option.value = act;
+                option.text = act;
+                document.getElementById('actividad').appendChild(option);
+            });
+
+            municipios.forEach(function(mun) {
+                var option = document.createElement('option');
+                option.value = mun;
+                option.text = mun;
+                document.getElementById('municipio').appendChild(option);
+            });
+
+            // Mostrar los datos en el mapa y la tabla
+            actualizarMapaYTabla();
+        });
+
+        // Función para actualizar el mapa y la tabla según los filtros
+        function actualizarMapaYTabla() {
+            markersLayer.clearLayers();
+            document.querySelector('#dataTable tbody').innerHTML = '';
+
+            var actividadFiltro = document.getElementById('actividad').value;
+            var municipioFiltro = document.getElementById('municipio').value;
+            var personalFiltro = document.getElementById('personal').value;
+
+            datos.forEach(function(d) {
+                var mostrar = true;
+
+                if (actividadFiltro && d.nombre_act !== actividadFiltro) {
+                    mostrar = false;
+                }
+                if (municipioFiltro && d.municipio !== municipioFiltro) {
+                    mostrar = false;
+                }
+                if (personalFiltro && d.per_ocu !== personalFiltro) {
+                    mostrar = false;
+                }
+
+                if (mostrar) {
+                    // Añadir marcador al mapa
+                    if (d.latitud && d.longitud) {
+                        var marker = L.marker([parseFloat(d.latitud), parseFloat(d.longitud)])
+                            .bindPopup(`<strong>${d.nom_estab}</strong><br>${d.nombre_act}<br>${d.municipio}`);
+                        markersLayer.addLayer(marker);
+                    }
+
+                    // Añadir fila a la tabla
+                    var row = `<tr>
+                        <td>${d.nom_estab}</td>
+                        <td>${d.nombre_act}</td>
+                        <td>${d.municipio}</td>
+                        <td>${rangoPersonal(d.per_ocu)}</td>
+                    </tr>`;
+                    document.querySelector('#dataTable tbody').insertAdjacentHTML('beforeend', row);
+                }
+            });
+
+            map.addLayer(markersLayer);
+        }
+
+        // Función para traducir el código de personal ocupado a rango
+        function rangoPersonal(codigo) {
+            switch (codigo) {
+                case '1':
+                    return '0 a 5';
+                case '2':
+                    return '6 a 10';
+                case '3':
+                    return '11 a 30';
+                case '4':
+                    return '31 a 50';
+                case '5':
+                    return '51 a 100';
+                case '6':
+                    return '101 a 250';
+                case '7':
+                    return '251 y más';
+                default:
+                    return 'No especificado';
+            }
+        }
+
+        // Evento al aplicar filtros
+        document.getElementById('filterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            actualizarMapaYTabla();
+        });
+    </script>
+</body>
+</html>
