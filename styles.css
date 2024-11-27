@@ -3,386 +3,216 @@
 /* Estilos generales */
 body {
     font-family: 'Montserrat', sans-serif;
-    color: #333;
-    background-color: #f8f9fa;
-    margin: 0;
-    padding-top: 70px; /* Para compensar la altura de la barra de navegación fija */
-    overflow-x: hidden; /* Evita el scroll horizontal */
+    line-height: 1.6;
+    color: #333333;
 }
 
-/* Barra de navegación */
-.navbar {
-    padding: 1rem 2rem;
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-.navbar-brand {
-    font-weight: 700;
-    font-size: 1.5rem;
+a:hover {
+    text-decoration: none;
+    color: #0d6efd;
 }
 
-.navbar-brand img {
-    margin-right: 10px;
-}
-
-.navbar-nav .nav-link {
-    font-size: 1.1rem;
-    margin-left: 1rem;
-}
-
-.navbar-nav .nav-link.active {
-    font-weight: 700;
-}
-
-/* Botón de la barra de navegación en móviles */
-.navbar-toggler {
-    border: none;
-}
-
-/* Sección Hero (Home) */
+/* Estilos para la sección Hero */
 .hero-section {
-    background: linear-gradient(rgba(0, 50, 100, 0.6), rgba(0, 50, 100, 0.6)), url('https://via.placeholder.com/1920x1080') no-repeat center center;
-    background-size: cover;
+    position: relative;
     height: 100vh;
     display: flex;
     align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    text-align: center;
 }
 
-.hero-section h1 {
-    font-size: 4rem;
-    animation: fadeInDown 1s;
-}
-
-.hero-section .lead {
-    font-size: 1.5rem;
-    animation: fadeInUp 1s;
-}
-
-.hero-section .btn {
-    font-size: 1.2rem;
-    animation: fadeInUp 1s;
-}
-
-/* Sección Hero para Indicadores */
-.hero-section-indicadores {
-    background: linear-gradient(rgba(0, 50, 100, 0.6), rgba(0, 50, 100, 0.6)), url('https://via.placeholder.com/1920x600') no-repeat center center;
-    background-size: cover;
-    height: 60vh;
-    display: flex;
-    align-items: center;
-    margin-top: 70px; /* Ajuste para la barra de navegación fija */
-}
-
-.hero-section-indicadores h1 {
-    font-size: 3rem;
-    animation: fadeInDown 1s;
-}
-
-.hero-section-indicadores .lead {
-    font-size: 1.5rem;
-    animation: fadeInUp 1s;
-}
-
-/* Animaciones */
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-50px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(50px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Sección de Indicadores */
-#indicadores h2 {
-    font-weight: 700;
-    margin-bottom: 2rem;
-}
-
-.kpi-card {
-    background-color: #fff;
-    padding: 2rem 1rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Superposición oscura */
 }
 
-.kpi-number {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #007bff;
-    margin: 0;
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 15px;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    margin-bottom: 30px;
+}
+
+.hero-content .btn {
+    padding: 10px 30px;
+    font-size: 1rem;
+}
+
+/* Estilos para los KPIs */
+.kpi-card {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #ffffff;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.kpi-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .kpi-card i {
-    color: #007bff;
+    color: #0d6efd;
 }
 
-/* Gráficas */
-canvas {
-    width: 100% !important;
-    height: 350px !important;
+.kpi-card h5 {
+    margin-bottom: 15px;
+    font-size: 1.25rem;
+    color: #333333;
 }
 
-@media (max-width: 992px) {
-    canvas {
-        height: 250px !important;
-    }
+.kpi-card .kpi-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #0d6efd;
 }
 
-/* Estilos para las gráficas interactivas de Plotly */
-#graficaPIB,
-#graficaEmpleo,
-#graficaEducacion,
-#graficaCompetitividad {
-    width: 100%;
+/* Estilos para las gráficas */
+.chart-container {
+    position: relative;
     height: 400px;
-}
-
-@media (max-width: 992px) {
-    #graficaPIB,
-    #graficaEmpleo,
-    #graficaEducacion,
-    #graficaCompetitividad {
-        height: 300px;
-    }
-}
-
-/* Estilos para los filtros */
-.form-label {
-    font-weight: 600;
-}
-
-.form-select {
-    border-radius: 0.5rem;
-}
-
-/* Sectores Clave */
-.sector-card {
-    text-align: center;
-}
-
-.sector-card img {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 1rem;
 }
 
-.sector-card h4 {
-    font-weight: 700;
-    margin-bottom: 1rem;
+/* Estilos para las tarjetas de Sectores Clave y Cultura y Turismo */
+.sector-card, .atractivo-card {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #ffffff;
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
 }
 
-.sector-card p {
-    color: #555;
+.sector-card:hover, .atractivo-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.btn-outline-primary {
-    border-radius: 0.5rem;
-}
-
-.btn-outline-primary:hover {
-    background-color: #007bff;
-    color: #fff;
-}
-
-/* Cultura y Turismo */
-.atractivo-card {
-    text-align: center;
-}
-
-.atractivo-card img {
+.sector-card img, .atractivo-card img {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 1rem;
+    height: auto;
+    border-radius: 10px;
 }
 
-.atractivo-card h5 {
-    font-weight: 700;
-    margin-bottom: 1rem;
+.sector-card h4, .atractivo-card h5 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #333333;
 }
 
-.atractivo-card p {
-    color: #555;
+.sector-card p, .atractivo-card p {
+    font-size: 1rem;
+    color: #555555;
 }
 
-/* Sección Contacto */
-#contacto h2 {
-    font-weight: 700;
-    margin-bottom: 2rem;
+.sector-card .btn, .atractivo-card .btn {
+    margin-top: 10px;
+    padding: 8px 20px;
+    font-size: 0.95rem;
 }
 
-#contacto h5 {
-    font-weight: 700;
+/* Estilos para el botón "Ver más" */
+.text-center .btn-outline-primary {
+    border-width: 2px;
+    color: #0d6efd;
+    border-color: #0d6efd;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-#contacto .form-control {
-    border-radius: 0.5rem;
+.text-center .btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: #ffffff;
 }
 
-#contacto .btn {
-    border-radius: 0.5rem;
-}
-
+/* Estilos para las Redes Sociales */
 .social-icons a {
-    color: #333;
+    color: #ffffff;
     transition: color 0.3s;
 }
 
 .social-icons a:hover {
-    color: #007bff;
+    color: #0d6efd;
 }
 
-/* Pie de página */
+/* Estilos para el Formulario de Contacto */
+#contactForm {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+#contactForm .form-label {
+    font-weight: bold;
+    color: #333333;
+}
+
+#contactForm .btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+#contactForm .btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+/* Estilos para el mensaje de formulario */
+#formMessage {
+    font-size: 1rem;
+}
+
+/* Estilos para el Pie de Página */
 footer {
     background-color: #343a40;
-    color: #fff;
-    padding: 1.5rem 0;
+    color: #ffffff;
 }
 
 footer p {
     margin: 0;
-}
-
-/* Estilos específicos para el geovisor */
-#map {
-    width: 100%;
-    height: 600px;
-}
-
-@media (max-width: 992px) {
-    #map {
-        height: 400px;
-    }
-}
-
-.card-body {
-    position: relative;
-}
-
-.card-body canvas {
-    width: 100% !important;
-    height: 300px !important;
-}
-
-/* Estilos para secciones alternadas */
-.section-graph {
-    padding: 5rem 0;
-}
-
-.section-graph .row {
-    margin-bottom: 5rem;
-}
-
-.section-graph h3 {
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-.section-graph p {
-    color: #555;
-}
-
-.row:nth-child(even) .col-lg-6:first-child {
-    order: 2;
-}
-
-.row:nth-child(even) .col-lg-6:last-child {
-    order: 1;
-}
-
-/* Estilos para botones */
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #004085;
-}
-
-.btn-lg {
-    padding: 0.75rem 1.25rem;
-    font-size: 1.25rem;
-    border-radius: 0.3rem;
-}
-
-/* Estilos para enlaces */
-a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-a:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-/* Estilos para tablas */
-.table-responsive {
-    margin-top: 2rem;
-}
-
-.table th {
-    font-weight: 600;
-}
-
-.table tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Estilos para el formulario de filtros en el geovisor */
-#filterForm .form-label {
-    font-weight: 600;
-}
-
-#filterForm .btn {
-    margin-top: 1rem;
-}
-
-/* Estilos para el mapa en el geovisor */
-.leaflet-container {
-    background: #fff;
+    font-size: 1rem;
 }
 
 /* Responsividad */
-@media (max-width: 992px) {
-    .hero-section {
-        height: 80vh;
-    }
-
-    .hero-section h1 {
-        font-size: 3rem;
-    }
-
-    .hero-section .lead {
-        font-size: 1.2rem;
-    }
-
-    .hero-section-indicadores {
-        height: 50vh;
-    }
-
-    .hero-section-indicadores h1 {
+@media (max-width: 768px) {
+    .hero-content h1 {
         font-size: 2.5rem;
     }
 
-    .hero-section-indicadores .lead {
-        font-size: 1.2rem;
+    .hero-content p {
+        font-size: 1rem;
     }
 
-    .navbar-brand {
-        font-size: 1.2rem;
+    .kpi-card .kpi-number {
+        font-size: 1.5rem;
     }
 
-    .navbar-nav .nav-link {
-        margin-left: 0;
-    }
-
-    .kpi-number {
-        font-size: 2rem;
+    .sector-card h4, .atractivo-card h5 {
+        font-size: 1.25rem;
     }
 }

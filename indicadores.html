@@ -3,19 +3,40 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Indicadores Clave - Sonora a prueba de futuro</title>
+    <title>Indicadores Económicos - Sonora a prueba de futuro</title>
     <!-- Meta etiquetas para responsividad -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Enlaces a Bootstrap CSS y otros estilos -->
+    <!-- Enlace a Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Enlace a AOS para animaciones al hacer scroll -->
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-    <!-- Enlace al archivo CSS personalizado -->
-    <link rel="stylesheet" href="styles.css">
     <!-- Enlace a Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <!-- Enlace a Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Enlace a Leaflet CSS para el mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-sA+ePHlfwLVEJUGkqYtB8TVssNKb+2JlQ8o7H3u36Mw="
+          crossorigin=""/>
+    <!-- Enlace al archivo CSS personalizado -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos adicionales para el mapa */
+        #map {
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        /* Estilos para las gráficas */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            margin-bottom: 50px;
+        }
+    </style>
 </head>
 <body>
     <!-- Barra de navegación -->
@@ -54,161 +75,77 @@
         </div>
     </nav>
 
-    <!-- Sección Hero -->
-    <section class="hero-section-indicadores text-white text-center d-flex align-items-center">
-        <div class="container" data-aos="fade-up">
-            <h1 class="display-4 fw-bold">Indicadores Económicos y Sociales</h1>
-            <p class="lead">Explora los principales indicadores que impulsan el desarrollo de Sonora a través de visualizaciones interactivas.</p>
-        </div>
-    </section>
-
-    <!-- Sección de KPIs -->
-    <section class="py-5">
+    <!-- Sección de Indicadores Económicos -->
+    <section class="py-5" style="margin-top: 80px;">
         <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Indicadores Clave</h2>
-            <div class="row text-center g-4">
-                <!-- KPI 1 -->
-                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="kpi-card h-100">
-                        <i class="fas fa-industry fa-3x text-primary mb-3"></i>
-                        <h5>PIB Estatal</h5>
-                        <p class="kpi-number" data-target="35000" data-unit=" M USD">0 M USD</p>
-                    </div>
-                </div>
-                <!-- KPI 2 -->
-                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="kpi-card h-100">
-                        <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
-                        <h5>Tasa de Empleo</h5>
-                        <p class="kpi-number" data-target="96.5" data-unit="%">0%</p>
-                    </div>
-                </div>
-                <!-- KPI 3 -->
-                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="kpi-card h-100">
-                        <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
-                        <h5>Índice de Educación</h5>
-                        <p class="kpi-number" data-target="0.85">0</p>
-                    </div>
-                </div>
-                <!-- KPI 4 -->
-                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="kpi-card h-100">
-                        <i class="fas fa-chart-pie fa-3x text-primary mb-3"></i>
-                        <h5>Índice de Competitividad</h5>
-                        <p class="kpi-number" data-target="60">0</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Gráficas Interactivas -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <!-- Gráfica 1: Crecimiento del PIB Estatal -->
-            <div class="row align-items-center mb-5">
-                <div class="col-lg-6" data-aos="fade-right">
-                    <h3>Crecimiento del PIB Estatal</h3>
-                    <p>El PIB de Sonora ha mostrado un crecimiento sostenido en los últimos años, impulsado por sectores clave.</p>
-                    <!-- Filtros -->
-                    <div class="mb-3">
-                        <label for="pibAnio" class="form-label">Selecciona el Año</label>
-                        <select class="form-select" id="pibAnio">
-                            <option value="2018">2018</option>
-                            <option value="2019">2019</option>
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022" selected>2022</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div id="graficaPIB"></div>
-                </div>
-            </div>
-            <!-- Gráfica 2: Distribución del Empleo por Sector -->
-            <div class="row align-items-center mb-5">
-                <div class="col-lg-6 order-lg-2" data-aos="fade-left">
-                    <h3>Distribución del Empleo por Sector</h3>
-                    <p>La fuerza laboral de Sonora se distribuye en diversos sectores económicos.</p>
-                    <!-- Filtros -->
-                    <div class="mb-3">
-                        <label for="empleoAnio" class="form-label">Selecciona el Año</label>
-                        <select class="form-select" id="empleoAnio">
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022" selected>2022</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6 order-lg-1" data-aos="fade-right">
-                    <div id="graficaEmpleo"></div>
-                </div>
-            </div>
-            <!-- Gráfica 3: Nivel Educativo de la Población -->
-            <div class="row align-items-center mb-5">
-                <div class="col-lg-6" data-aos="fade-right">
-                    <h3>Nivel Educativo de la Población</h3>
-                    <p>Sonora cuenta con un alto índice de educación.</p>
-                    <!-- Filtros -->
-                    <div class="mb-3">
-                        <label for="educacionAnio" class="form-label">Selecciona el Año</label>
-                        <select class="form-select" id="educacionAnio">
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022" selected>2022</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div id="graficaEducacion"></div>
-                </div>
-            </div>
-            <!-- Gráfica 4: Índice de Competitividad por Municipio -->
-            <div class="row align-items-center">
-                <div class="col-lg-6 order-lg-2" data-aos="fade-left">
-                    <h3>Índice de Competitividad por Municipio</h3>
-                    <p>Los municipios de Sonora presentan distintos niveles de competitividad.</p>
-                    <!-- Filtros -->
-                    <div class="mb-3">
-                        <label for="competitividadAnio" class="form-label">Selecciona el Año</label>
-                        <select class="form-select" id="competitividadAnio">
-                            <option value="2020">2020</option>
-                            <option value="2021">2021</option>
-                            <option value="2022" selected>2022</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6 order-lg-1" data-aos="fade-right">
-                    <div id="graficaCompetitividad"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Datos Detallados -->
-    <section class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5" data-aos="fade-up">Datos Detallados</h2>
-            <!-- Tabla de Datos -->
+            <h1 class="text-center mb-5" data-aos="fade-up">Indicadores Económicos de Sonora</h1>
             <div class="row">
-                <div class="col-12">
-                    <div class="table-responsive" data-aos="fade-up">
-                        <table class="table table-striped table-hover" id="dataTable">
-                            <thead>
-                                <tr>
-                                    <th>Municipio</th>
-                                    <th>Indicador</th>
-                                    <th>Año</th>
-                                    <th>Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Filas dinámicas serán insertadas aquí -->
-                            </tbody>
-                        </table>
+                <!-- Gráfica 1 -->
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="chart-container">
+                        <canvas id="pibChart"></canvas>
                     </div>
+                </div>
+                <!-- Gráfica 2 -->
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="chart-container">
+                        <canvas id="desempleoChart"></canvas>
+                    </div>
+                </div>
+                <!-- Gráfica 3 -->
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="chart-container">
+                        <canvas id="inversionChart"></canvas>
+                    </div>
+                </div>
+                <!-- Gráfica 4 -->
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="chart-container">
+                        <canvas id="exportacionesChart"></canvas>
+                    </div>
+                </div>
+                <!-- Gráfica 5 -->
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="chart-container">
+                        <canvas id="importacionesChart"></canvas>
+                    </div>
+                </div>
+                <!-- Gráfica 6 -->
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="chart-container">
+                        <canvas id="nuevaEmpresarialChart"></canvas>
+                    </div>
+                </div>
+                <!-- Gráfica 7 -->
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="700">
+                    <div class="chart-container">
+                        <canvas id="crecimientoPoblacionalChart"></canvas>
+                    </div>
+                </div>
+                <!-- Gráfica 8 -->
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="800">
+                    <div class="chart-container">
+                        <canvas id="sectorAgricolaChart"></canvas>
+                    </div>
+                </div>
+                <!-- Gráfica 9 -->
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="900">
+                    <div class="chart-container">
+                        <canvas id="sectorMineriaChart"></canvas>
+                    </div>
+                </div>
+                <!-- Gráfica 10 -->
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="1000">
+                    <div class="chart-container">
+                        <canvas id="sectorEnergiaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Mapa Interactivo -->
+            <div class="row">
+                <div class="col-12" data-aos="fade-up" data-aos-delay="1100">
+                    <h3 class="text-center mb-3">Mapa de Oportunidades en Sonora</h3>
+                    <div id="map"></div>
                 </div>
             </div>
         </div>
@@ -226,11 +163,19 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Enlace a AOS JS para animaciones -->
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <!-- Enlace a Plotly.js para gráficas interactivas -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <!-- Enlace a D3.js para manipulación de datos -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Enlace a Typed.js (si es necesario) -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <!-- Enlace a Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Enlace a Leaflet JS para el mapa -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-o9N1jz0zFJ0pB5q0LF8a3TXhPzJzYhG74TtY6u7gD4M="
+            crossorigin=""></script>
     <!-- Enlace al archivo JavaScript principal -->
     <script src="main.js"></script>
+    <!-- Inicializar AOS -->
+    <script>
+        AOS.init();
+    </script>
 </body>
 </html>
