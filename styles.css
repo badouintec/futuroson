@@ -33,7 +33,12 @@ body {
     font-weight: 700;
 }
 
-/* Sección Hero */
+/* Botón de la barra de navegación en móviles */
+.navbar-toggler {
+    border: none;
+}
+
+/* Sección Hero (Home) */
 .hero-section {
     background: linear-gradient(rgba(0, 50, 100, 0.6), rgba(0, 50, 100, 0.6)), url('https://via.placeholder.com/1920x1080') no-repeat center center;
     background-size: cover;
@@ -54,6 +59,26 @@ body {
 
 .hero-section .btn {
     font-size: 1.2rem;
+    animation: fadeInUp 1s;
+}
+
+/* Sección Hero para Indicadores */
+.hero-section-indicadores {
+    background: linear-gradient(rgba(0, 50, 100, 0.6), rgba(0, 50, 100, 0.6)), url('https://via.placeholder.com/1920x600') no-repeat center center;
+    background-size: cover;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    margin-top: 70px; /* Ajuste para la barra de navegación fija */
+}
+
+.hero-section-indicadores h1 {
+    font-size: 3rem;
+    animation: fadeInDown 1s;
+}
+
+.hero-section-indicadores .lead {
+    font-size: 1.5rem;
     animation: fadeInUp 1s;
 }
 
@@ -89,18 +114,47 @@ body {
     margin: 0;
 }
 
-/* Gráficas */
-.chart-container {
-    position: relative;
-    width: 100%;
-    height: 300px;
-    margin-bottom: 20px;
+.kpi-card i {
+    color: #007bff;
 }
 
-@media (max-width: 768px) {
-    .chart-container {
-        height: 250px;
+/* Gráficas */
+canvas {
+    width: 100% !important;
+    height: 350px !important;
+}
+
+@media (max-width: 992px) {
+    canvas {
+        height: 250px !important;
     }
+}
+
+/* Estilos para las gráficas interactivas de Plotly */
+#graficaPIB,
+#graficaEmpleo,
+#graficaEducacion,
+#graficaCompetitividad {
+    width: 100%;
+    height: 400px;
+}
+
+@media (max-width: 992px) {
+    #graficaPIB,
+    #graficaEmpleo,
+    #graficaEducacion,
+    #graficaCompetitividad {
+        height: 300px;
+    }
+}
+
+/* Estilos para los filtros */
+.form-label {
+    font-weight: 600;
+}
+
+.form-select {
+    border-radius: 0.5rem;
 }
 
 /* Sectores Clave */
@@ -185,10 +239,113 @@ body {
 footer {
     background-color: #343a40;
     color: #fff;
+    padding: 1.5rem 0;
 }
 
 footer p {
     margin: 0;
+}
+
+/* Estilos específicos para el geovisor */
+#map {
+    width: 100%;
+    height: 600px;
+}
+
+@media (max-width: 992px) {
+    #map {
+        height: 400px;
+    }
+}
+
+.card-body {
+    position: relative;
+}
+
+.card-body canvas {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+/* Estilos para secciones alternadas */
+.section-graph {
+    padding: 5rem 0;
+}
+
+.section-graph .row {
+    margin-bottom: 5rem;
+}
+
+.section-graph h3 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.section-graph p {
+    color: #555;
+}
+
+.row:nth-child(even) .col-lg-6:first-child {
+    order: 2;
+}
+
+.row:nth-child(even) .col-lg-6:last-child {
+    order: 1;
+}
+
+/* Estilos para botones */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.btn-lg {
+    padding: 0.75rem 1.25rem;
+    font-size: 1.25rem;
+    border-radius: 0.3rem;
+}
+
+/* Estilos para enlaces */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Estilos para tablas */
+.table-responsive {
+    margin-top: 2rem;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilos para el formulario de filtros en el geovisor */
+#filterForm .form-label {
+    font-weight: 600;
+}
+
+#filterForm .btn {
+    margin-top: 1rem;
+}
+
+/* Estilos para el mapa en el geovisor */
+.leaflet-container {
+    background: #fff;
 }
 
 /* Responsividad */
@@ -204,9 +361,19 @@ footer p {
     .hero-section .lead {
         font-size: 1.2rem;
     }
-}
 
-@media (max-width: 768px) {
+    .hero-section-indicadores {
+        height: 50vh;
+    }
+
+    .hero-section-indicadores h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section-indicadores .lead {
+        font-size: 1.2rem;
+    }
+
     .navbar-brand {
         font-size: 1.2rem;
     }

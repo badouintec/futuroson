@@ -1,160 +1,232 @@
 // main.js
 
-// Inicialización de Typed.js para animación de texto en el Hero
-var typed = new Typed('#typed', {
-    strings: ['Sonora a prueba de futuro', 'Inversión y Crecimiento', 'Innovación y Desarrollo'],
-    typeSpeed: 50,
-    backSpeed: 50,
-    loop: true
-});
-
-// Animación de los KPIs
+// Función para animar los KPIs
 function animarKPIs() {
     const counters = document.querySelectorAll('.kpi-number');
     counters.forEach(counter => {
-        counter.innerText = '0';
-        const updateCount = () => {
-            const target = parseFloat(counter.getAttribute('data-target'));
-            const unit = counter.getAttribute('data-unit') || '';
-            const current = parseFloat(counter.innerText.replace(/[^0-9.-]+/g, ""));
-            const increment = target / 100;
+        const target = parseFloat(counter.getAttribute('data-target'));
+        const unit = counter.getAttribute('data-unit') || '';
+        const duration = 2000; // Duración total de la animación en ms
+        const interval = 20; // Intervalo de actualización en ms
+        const steps = duration / interval;
+        const increment = target / steps;
+        let current = 0;
 
+        const updateCount = () => {
+            current += increment;
             if (current < target) {
-                counter.innerText = Math.ceil(current + increment) + unit;
-                setTimeout(updateCount, 20);
+                counter.innerText = Math.ceil(current) + unit;
+                setTimeout(updateCount, interval);
             } else {
                 counter.innerText = target.toLocaleString() + unit;
             }
         };
+
         updateCount();
     });
 }
 
-// Datos para la gráfica de PIB
-const datosPIB = {
-    labels: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-    data: [28000, 29000, 30000, 31000, 30000, 32000, 33000, 34000]
-};
+// Función para capitalizar la primera letra (utilizada en indicadores.html)
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
-// Crear gráfica de PIB
-function crearGraficaPIB() {
-    var ctx = document.getElementById('pibChart').getContext('2d');
-    var pibChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: datosPIB.labels,
-            datasets: [{
-                label: 'PIB (M USD)',
-                data: datosPIB.data,
-                borderColor: '#007bff',
-                backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                fill: true,
-                tension: 0.4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: {
-                duration: 2000
-            },
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    enabled: true
-                }
-            },
-            interaction: {
-                mode: 'index',
-                intersect: false
-            },
-            scales: {
-                y: {
-                    ticks: {
-                        callback: function(value) {
-                            return value + ' M';
-                        }
-                    }
-                }
-            }
-        }
+// Función para obtener la unidad según el indicador (utilizada en indicadores.html)
+function getUnit(indicador) {
+    const units = {
+        'pib': ' M USD',
+        'empleo': '%',
+        'educacion': '%',
+        'competitividad': ''
+    };
+    return units[indicador] || '';
+}
+
+// Función para cargar y mostrar datos detallados en la tabla
+function cargarDatosTabla() {
+    d3.csv('indicadores.csv').then(function(data) {
+        const tbody = d3.select('#dataTable tbody');
+        tbody.html(''); // Limpiar tabla
+
+        data.forEach(function(d) {
+            tbody.append('tr')
+                .html(`
+                    <td>${d.municipio}</td>
+                    <td>${capitalizeFirstLetter(d.indicador)}</td>
+                    <td>${d.anio}</td>
+                    <td>${d.valor}${getUnit(d.indicador)}</td>
+                `);
+        });
+    }).catch(function(error){
+        console.error('Error cargando los datos de la tabla:', error);
     });
 }
 
-// Datos para la gráfica de Desempleo
-const datosDesempleo = {
-    labels: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'],
-    data: [5.5, 5.0, 4.8, 4.5, 6.0, 5.2, 4.9, 4.7]
-};
+// Funciones para actualizar gráficas con Plotly.js
 
-// Crear gráfica de Desempleo
-function crearGraficaDesempleo() {
-    var ctx = document.getElementById('desempleoChart').getContext('2d');
-    var desempleoChart = new Chart(ctx, {
+// Función para actualizar gráfica PIB
+function actualizarGraficaPIB(anio) {
+    const municipios = ['Hermosillo', 'Cajeme', 'Nogales', 'Guaymas', 'Navojoa'];
+    const datos = {
+        '2018': [32000, 28000, 30000, 31000, 29000],
+        '2019': [33000, 29000, 31000, 32000, 30000],
+        '2020': [31000, 27000, 29000, 30000, 28000],
+        '2021': [34000, 30000, 32000, 33000, 31000],
+        '2022': [35000, 31000, 33000, 34000, 32000]
+    };
+
+    const trace = {
+        x: municipios,
+        y: datos[anio],
         type: 'bar',
-        data: {
-            labels: datosDesempleo.labels,
-            datasets: [{
-                label: 'Tasa de Desempleo (%)',
-                data: datosDesempleo.data,
-                backgroundColor: '#dc3545'
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: {
-                duration: 2000
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 10,
-                    ticks: {
-                        callback: function(value) {
-                            return value + '%';
-                        }
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                },
-                tooltip: {
-                    enabled: true
-                }
-            },
-            interaction: {
-                mode: 'index',
-                intersect: false
-            }
+        marker: {
+            color: 'rgba(0, 123, 255, 0.7)'
         }
+    };
+
+    const layout = {
+        title: `PIB por Municipio en ${anio} (M USD)`,
+        xaxis: { title: 'Municipios' },
+        yaxis: { title: 'PIB (M USD)' },
+        margin: { t: 50, l: 50, r: 30, b: 50 }
+    };
+
+    Plotly.newPlot('graficaPIB', [trace], layout, { responsive: true });
+}
+
+// Función para actualizar gráfica Empleo
+function actualizarGraficaEmpleo(anio) {
+    const sectores = ['Industria Manufacturera', 'Comercio', 'Agricultura', 'Minería', 'Servicios'];
+    const datos = {
+        '2020': [30, 25, 15, 10, 20],
+        '2021': [32, 26, 14, 11, 17],
+        '2022': [35, 28, 12, 10, 15]
+    };
+
+    const trace = {
+        labels: sectores,
+        values: datos[anio],
+        type: 'pie',
+        hole: 0.4,
+        marker: {
+            colors: [
+                'rgba(0, 123, 255, 0.7)', 
+                'rgba(220, 53, 69, 0.7)', 
+                'rgba(255, 193, 7, 0.7)', 
+                'rgba(40, 167, 69, 0.7)', 
+                'rgba(111, 66, 193, 0.7)'
+            ]
+        }
+    };
+
+    const layout = {
+        title: `Distribución del Empleo por Sector en ${anio}`,
+        showlegend: true,
+        margin: { t: 50, l: 50, r: 30, b: 50 }
+    };
+
+    Plotly.newPlot('graficaEmpleo', [trace], layout, { responsive: true });
+}
+
+// Función para actualizar gráfica Educación
+function actualizarGraficaEducacion(anio) {
+    const niveles = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad', 'Posgrado'];
+    const datos = {
+        '2020': [15, 25, 30, 20, 10],
+        '2021': [14, 24, 32, 20, 10],
+        '2022': [13, 22, 35, 20, 10]
+    };
+
+    const trace = {
+        x: niveles,
+        y: datos[anio],
+        type: 'bar',
+        marker: {
+            color: 'rgba(23, 162, 184, 0.7)'
+        }
+    };
+
+    const layout = {
+        title: `Nivel Educativo de la Población en ${anio}`,
+        xaxis: { title: 'Nivel Educativo' },
+        yaxis: { title: 'Porcentaje (%)', range: [0, 40] },
+        margin: { t: 50, l: 50, r: 30, b: 50 }
+    };
+
+    Plotly.newPlot('graficaEducacion', [trace], layout, { responsive: true });
+}
+
+// Función para actualizar gráfica Competitividad
+function actualizarGraficaCompetitividad(anio) {
+    const municipios = ['Hermosillo', 'Cajeme', 'Nogales', 'Guaymas', 'Navojoa'];
+    const datos = {
+        '2020': [75, 65, 60, 55, 50],
+        '2021': [77, 67, 62, 57, 52],
+        '2022': [80, 70, 65, 60, 55]
+    };
+
+    const trace = {
+        x: datos[anio],
+        y: municipios,
+        type: 'bar',
+        orientation: 'h',
+        marker: {
+            color: 'rgba(255, 193, 7, 0.7)'
+        }
+    };
+
+    const layout = {
+        title: `Índice de Competitividad por Municipio en ${anio}`,
+        xaxis: { title: 'Índice' },
+        yaxis: { autorange: 'reversed' },
+        margin: { t: 50, l: 50, r: 30, b: 50 }
+    };
+
+    Plotly.newPlot('graficaCompetitividad', [trace], layout, { responsive: true });
+}
+
+// Inicializar todas las gráficas con los años predeterminados
+function inicializarGraficas() {
+    actualizarGraficaPIB('2022');
+    actualizarGraficaEmpleo('2022');
+    actualizarGraficaEducacion('2022');
+    actualizarGraficaCompetitividad('2022');
+}
+
+// Eventos para los selectores de año
+function agregarEventosSelectores() {
+    document.getElementById('pibAnio').addEventListener('change', function() {
+        actualizarGraficaPIB(this.value);
+    });
+
+    document.getElementById('empleoAnio').addEventListener('change', function() {
+        actualizarGraficaEmpleo(this.value);
+    });
+
+    document.getElementById('educacionAnio').addEventListener('change', function() {
+        actualizarGraficaEducacion(this.value);
+    });
+
+    document.getElementById('competitividadAnio').addEventListener('change', function() {
+        actualizarGraficaCompetitividad(this.value);
     });
 }
 
-// Validación y envío del formulario de contacto
-document.getElementById('contactForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    // Validación básica
-    const nombre = document.getElementById('nombre').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const mensaje = document.getElementById('mensaje').value.trim();
-    if (nombre === '' || email === '' || mensaje === '') {
-        document.getElementById('formMessage').innerHTML = '<div class="alert alert-danger">Por favor, completa todos los campos.</div>';
-        return;
-    }
-    // Simulación de envío
-    document.getElementById('formMessage').innerHTML = '<div class="alert alert-success">Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.</div>';
-    // Reiniciar el formulario
-    document.getElementById('contactForm').reset();
-});
-
-// Inicializar la aplicación
+// Inicializar funciones cuando el DOM esté cargado
 document.addEventListener('DOMContentLoaded', function () {
-    animarKPIs();
-    crearGraficaPIB();
-    crearGraficaDesempleo();
+    // Animar KPIs si existen en la página
+    if (document.querySelector('.kpi-number')) {
+        animarKPIs();
+    }
+
+    // Cargar datos en la tabla si existe en la página
+    if (document.getElementById('dataTable')) {
+        cargarDatosTabla();
+    }
+
+    // Inicializar gráficas si existen en la página
+    if (document.getElementById('graficaPIB')) {
+        inicializarGraficas();
+        agregarEventosSelectores();
+    }
 });

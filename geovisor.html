@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Enlace a Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Enlace a Chart.js CSS (opcional si necesitas estilos adicionales) -->
     <!-- Enlace al archivo CSS personalizado -->
     <link rel="stylesheet" href="styles.css">
     <!-- Enlace a AOS para animaciones al hacer scroll -->
@@ -57,16 +58,16 @@
 
     <!-- Sección del Geovisor -->
     <section class="py-5">
-        <div class="container">
+        <div class="container-fluid">
             <h2 class="text-center mb-5" data-aos="fade-up">Geovisor Interactivo</h2>
             <div class="row">
                 <!-- Mapa -->
-                <div class="col-md-8 mb-4">
+                <div class="col-lg-8 mb-4">
                     <div id="map" style="width: 100%; height: 600px;"></div>
                 </div>
-                <!-- Panel de Control -->
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm" data-aos="fade-left">
+                <!-- Panel de Control y Gráficas -->
+                <div class="col-lg-4 mb-4">
+                    <div class="card shadow-sm mb-4" data-aos="fade-left">
                         <div class="card-body">
                             <h5 class="card-title">Filtros</h5>
                             <form id="filterForm">
@@ -99,6 +100,13 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
                             </form>
+                        </div>
+                    </div>
+                    <!-- Gráficas -->
+                    <div class="card shadow-sm" data-aos="fade-left">
+                        <div class="card-body">
+                            <h5 class="card-title">Estadísticas</h5>
+                            <canvas id="barChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -139,8 +147,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Enlace a Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Enlace a Leaflet.markercluster JS -->
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     <!-- Enlace a D3.js para leer el CSV -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Enlace a Chart.js para las gráficas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Enlace a AOS JS para animaciones -->
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <!-- Enlace al archivo JavaScript principal -->
@@ -157,7 +169,7 @@
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        // Capa de marcadores
+        // Capa de marcadores con agrupamiento
         var markersLayer = L.markerClusterGroup();
 
         // Variables para almacenar los datos
@@ -166,7 +178,7 @@
         var municipios = new Set();
 
         // Función para cargar y procesar los datos del CSV
-        d3.csv("datos_denue.csv").then(function(data) {
+        d3.csv("denue.csv").then(function(data) {
             datos = data;
 
             // Poblar opciones de filtros
@@ -189,8 +201,9 @@
                 document.getElementById('municipio').appendChild(option);
             });
 
-            // Mostrar los datos en el mapa y la tabla
+            // Mostrar los datos en el mapa, la tabla y las gráficas
             actualizarMapaYTabla();
+            actualizarGraficas();
         });
 
         // Función para actualizar el mapa y la tabla según los filtros
@@ -202,7 +215,7 @@
             var municipioFiltro = document.getElementById('municipio').value;
             var personalFiltro = document.getElementById('personal').value;
 
-            datos.forEach(function(d) {
+            var datosFiltrados = datos.filter(function(d) {
                 var mostrar = true;
 
                 if (actividadFiltro && d.nombre_act !== actividadFiltro) {
@@ -215,26 +228,88 @@
                     mostrar = false;
                 }
 
-                if (mostrar) {
-                    // Añadir marcador al mapa
-                    if (d.latitud && d.longitud) {
-                        var marker = L.marker([parseFloat(d.latitud), parseFloat(d.longitud)])
-                            .bindPopup(`<strong>${d.nom_estab}</strong><br>${d.nombre_act}<br>${d.municipio}`);
-                        markersLayer.addLayer(marker);
-                    }
+                return mostrar;
+            });
 
-                    // Añadir fila a la tabla
-                    var row = `<tr>
-                        <td>${d.nom_estab}</td>
-                        <td>${d.nombre_act}</td>
-                        <td>${d.municipio}</td>
-                        <td>${rangoPersonal(d.per_ocu)}</td>
-                    </tr>`;
-                    document.querySelector('#dataTable tbody').insertAdjacentHTML('beforeend', row);
+            datosFiltrados.forEach(function(d) {
+                // Añadir marcador al mapa
+                if (d.latitud && d.longitud) {
+                    var marker = L.marker([parseFloat(d.latitud), parseFloat(d.longitud)])
+                        .bindPopup(`<strong>${d.nom_estab}</strong><br>${d.nombre_act}<br>${d.municipio}`);
+                    markersLayer.addLayer(marker);
                 }
+
+                // Añadir fila a la tabla
+                var row = `<tr>
+                    <td>${d.nom_estab}</td>
+                    <td>${d.nombre_act}</td>
+                    <td>${d.municipio}</td>
+                    <td>${rangoPersonal(d.per_ocu)}</td>
+                </tr>`;
+                document.querySelector('#dataTable tbody').insertAdjacentHTML('beforeend', row);
             });
 
             map.addLayer(markersLayer);
+
+            // Actualizar gráficas
+            actualizarGraficas(datosFiltrados);
+        }
+
+        // Función para actualizar las gráficas
+        function actualizarGraficas(datosFiltrados = datos) {
+            // Obtener datos para la gráfica
+            var conteoActividades = {};
+            datosFiltrados.forEach(function(d) {
+                if (conteoActividades[d.nombre_act]) {
+                    conteoActividades[d.nombre_act]++;
+                } else {
+                    conteoActividades[d.nombre_act] = 1;
+                }
+            });
+
+            var labels = Object.keys(conteoActividades);
+            var values = Object.values(conteoActividades);
+
+            // Crear o actualizar la gráfica
+            if (window.barChartInstance) {
+                window.barChartInstance.data.labels = labels;
+                window.barChartInstance.data.datasets[0].data = values;
+                window.barChartInstance.update();
+            } else {
+                var ctx = document.getElementById('barChart').getContext('2d');
+                window.barChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Número de Unidades Económicas',
+                            data: values,
+                            backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    autoSkip: false,
+                                    maxRotation: 90,
+                                    minRotation: 45
+                                }
+                            },
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
         }
 
         // Función para traducir el código de personal ocupado a rango
