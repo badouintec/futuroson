@@ -1,9 +1,12 @@
 // main.js
 
-// Función para animar los KPIs
+// Función para animar los KPIs cuando entran en el viewport
 function animarKPIs() {
     const counters = document.querySelectorAll('.kpi-number');
     counters.forEach(counter => {
+        // Verificar si ya se ha animado para evitar múltiples animaciones
+        if (counter.getAttribute('data-animated') === 'true') return;
+
         const target = parseFloat(counter.getAttribute('data-target'));
         const unit = counter.getAttribute('data-unit') || '';
         const duration = 2000; // Duración total de la animación en ms
@@ -15,10 +18,21 @@ function animarKPIs() {
         const updateCount = () => {
             current += increment;
             if (current < target) {
-                counter.innerText = Math.ceil(current) + unit;
+                // Para valores con decimales, ajustamos la precisión
+                if (target % 1 !== 0) {
+                    counter.innerText = current.toFixed(1) + unit;
+                } else {
+                    counter.innerText = Math.ceil(current).toLocaleString() + unit;
+                }
                 setTimeout(updateCount, interval);
             } else {
-                counter.innerText = target.toLocaleString() + unit;
+                // Aseguramos que el valor final sea exacto
+                if (target % 1 !== 0) {
+                    counter.innerText = target.toFixed(1) + unit;
+                } else {
+                    counter.innerText = target.toLocaleString() + unit;
+                }
+                counter.setAttribute('data-animated', 'true');
             }
         };
 
@@ -26,7 +40,7 @@ function animarKPIs() {
     });
 }
 
-// Función para inicializar Typed.js (si se usa en indicadores.html)
+// Función para inicializar Typed.js (si es necesario)
 function initTyped() {
     const typedElement = document.getElementById('typed');
     if (typedElement) {
@@ -41,8 +55,15 @@ function initTyped() {
     }
 }
 
-// Función para inicializar las gráficas de Chart.js en home.html e indicadores.html
+// Función para inicializar las gráficas de Chart.js en indicadores.html
 function initCharts() {
+    // Función para crear cada gráfica solo una vez
+    const createChart = (ctx, config) => {
+        if (ctx.dataset) return; // Evita recrear la gráfica
+        new Chart(ctx, config);
+        ctx.dataset = true; // Marca que ya se creó la gráfica
+    };
+
     // Gráfica 1: Crecimiento del PIB
     const ctxPib = document.getElementById('pibChart');
     if (ctxPib) {
@@ -97,7 +118,7 @@ function initCharts() {
             },
         };
 
-        new Chart(ctxPib, pibConfig);
+        createChart(ctxPib, pibConfig);
     }
 
     // Gráfica 2: Tasa de Desempleo
@@ -161,7 +182,7 @@ function initCharts() {
             },
         };
 
-        new Chart(ctxDesempleo, desempleoConfig);
+        createChart(ctxDesempleo, desempleoConfig);
     }
 
     // Gráfica 3: Inversión Extranjera Directa
@@ -214,8 +235,11 @@ function initCharts() {
             },
         };
 
-        new Chart(ctxInversion, inversionConfig);
+        createChart(ctxInversion, inversionConfig);
     }
+
+    // Repite la estructura anterior para cada una de tus gráficas...
+    // Asegúrate de que cada gráfica tenga su propio bloque similar al anterior
 
     // Gráfica 4: Exportaciones
     const ctxExportaciones = document.getElementById('exportacionesChart');
@@ -279,7 +303,7 @@ function initCharts() {
             },
         };
 
-        new Chart(ctxExportaciones, exportacionesConfig);
+        createChart(ctxExportaciones, exportacionesConfig);
     }
 
     // Gráfica 5: Importaciones
@@ -337,7 +361,7 @@ function initCharts() {
             },
         };
 
-        new Chart(ctxImportaciones, importacionesConfig);
+        createChart(ctxImportaciones, importacionesConfig);
     }
 
     // Gráfica 6: Nuevas Empresas
@@ -394,7 +418,7 @@ function initCharts() {
             },
         };
 
-        new Chart(ctxNuevaEmpresarial, nuevaEmpresarialConfig);
+        createChart(ctxNuevaEmpresarial, nuevaEmpresarialConfig);
     }
 
     // Gráfica 7: Crecimiento Poblacional
@@ -452,7 +476,7 @@ function initCharts() {
             },
         };
 
-        new Chart(ctxCrecimientoPoblacional, crecimientoPoblacionalConfig);
+        createChart(ctxCrecimientoPoblacional, crecimientoPoblacionalConfig);
     }
 
     // Gráfica 8: Sector Agrícola
@@ -505,7 +529,7 @@ function initCharts() {
             },
         };
 
-        new Chart(ctxSectorAgricola, sectorAgricolaConfig);
+        createChart(ctxSectorAgricola, sectorAgricolaConfig);
     }
 
     // Gráfica 9: Sector Minería
@@ -558,10 +582,10 @@ function initCharts() {
             },
         };
 
-        new Chart(ctxSectorMineria, sectorMineriaConfig);
+        createChart(ctxSectorMineria, sectorMineriaConfig);
     }
 
-    // Gráfica 10: Sector Energías Renovables
+    // Gráfica 10: Sector Energía
     const ctxSectorEnergia = document.getElementById('sectorEnergiaChart');
     if (ctxSectorEnergia) {
         const sectorEnergiaData = {
@@ -631,50 +655,43 @@ function initCharts() {
             },
         };
 
-        new Chart(ctxSectorEnergia, sectorEnergiaConfig);
+        createChart(ctxSectorEnergia, sectorEnergiaConfig);
     }
 }
 
-// Función para inicializar el mapa con Leaflet.js
+// Función para inicializar el mapa con Leaflet.js centrado en Hermosillo
 function initMap() {
     const mapElement = document.getElementById('map');
     if (mapElement) {
-        // Inicializar el mapa centrado en Sonora, México
-        const map = L.map('map').setView([29.0700, -110.9500], 7); // Coordenadas aproximadas de Sonora
+        try {
+            console.log("Inicializando el mapa...");
 
-        // Añadir capa de tiles de OpenStreetMap
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-        }).addTo(map);
+            // Coordenadas de Hermosillo, Sonora, México
+            const hermosilloCoords = [29.0700, -110.9500];
 
-        // Añadir marcador de ejemplo
-        L.marker([29.0700, -110.9500]).addTo(map)
-            .bindPopup('Centro de Desarrollo Económico')
-            .openPopup();
+            // Inicializar el mapa centrado en Hermosillo
+            const map = L.map('map').setView(hermosilloCoords, 12);
 
-        // Añadir círculos para representar estadísticas
-        // Ejemplo: Inversión en diferentes regiones
-        const inversiones = [
-            { coords: [29.0700, -110.9500], value: 5000, name: 'Hermosillo' },
-            { coords: [31.3327, -111.0027], value: 3000, name: 'Nogales' },
-            { coords: [27.9924, -109.4498], value: 2000, name: 'Guaymas' },
-            { coords: [30.4501, -111.8448], value: 3500, name: 'Ciudad Obregón' },
-            { coords: [25.5892, -109.0058], value: 1500, name: 'Ciudad Cuauhtémoc' }
-        ];
+            // Añadir capa de tiles de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+            }).addTo(map);
 
-        inversiones.forEach(inv => {
-            L.circle(inv.coords, {
-                color: 'blue',
-                fillColor: '#blue',
-                fillOpacity: 0.2,
-                radius: inv.value // El radio está basado en el valor de inversión
-            }).addTo(map)
-              .bindPopup(`<strong>${inv.name}</strong><br>Inversión: ${inv.value.toLocaleString()} M USD`);
-        });
+            // Añadir un marcador en Hermosillo
+            const marker = L.marker(hermosilloCoords).addTo(map)
+                .bindPopup('<strong>Hermosillo</strong><br>Capital de Sonora.')
+                .openPopup();
+
+            console.log("Mapa inicializado correctamente.");
+        } catch (error) {
+            console.error('Error al inicializar el mapa:', error);
+        }
+    } else {
+        console.warn("Elemento #map no encontrado en el DOM.");
     }
 }
 
-// Función para manejar el formulario de contacto (opcional)
+// Función para manejar el formulario de contacto (si aplica)
 function handleContactForm() {
     const contactForm = document.getElementById('contactForm');
     const formMessage = document.getElementById('formMessage');
@@ -690,13 +707,147 @@ function handleContactForm() {
     }
 }
 
+// Función para descargar CSV
+function downloadCSV(chartId) {
+    // Datos de ejemplo, reemplaza con tus datos reales o obténlos dinámicamente
+    const data = {
+        pib: [
+            ["Año", "PIB Estatal (M USD)"],
+            ["2018", "32000"],
+            ["2019", "33000"],
+            ["2020", "31000"],
+            ["2021", "34000"],
+            ["2022", "35000"]
+        ],
+        desempleo: [
+            ["Año", "Tasa de Desempleo (%)"],
+            ["2018", "4.5"],
+            ["2019", "4.2"],
+            ["2020", "5.0"],
+            ["2021", "4.8"],
+            ["2022", "4.5"]
+        ],
+        inversion: [
+            ["Año", "Inversión Extranjera Directa (M USD)"],
+            ["2018", "5000"],
+            ["2019", "5500"],
+            ["2020", "5300"],
+            ["2021", "5800"],
+            ["2022", "6000"]
+        ],
+        exportaciones: [
+            ["Sector", "Exportaciones (M USD)"],
+            ["Manufactura", "12000"],
+            ["Agricultura", "8000"],
+            ["Minería", "15000"],
+            ["Energía", "7000"],
+            ["Tecnología", "5000"]
+        ],
+        importaciones: [
+            ["Sector", "Importaciones (M USD)"],
+            ["Automóviles", "9000"],
+            ["Electrónica", "7500"],
+            ["Químicos", "6000"],
+            ["Maquinaria", "8000"],
+            ["Alimentos", "4000"]
+        ],
+        nuevaEmpresarial: [
+            ["Año", "Nuevas Empresas Registradas"],
+            ["2018", "1500"],
+            ["2019", "1600"],
+            ["2020", "1400"],
+            ["2021", "1700"],
+            ["2022", "1800"]
+        ],
+        crecimientoPoblacional: [
+            ["Año", "Crecimiento Poblacional (%)"],
+            ["2018", "1.2"],
+            ["2019", "1.1"],
+            ["2020", "0.9"],
+            ["2021", "1.3"],
+            ["2022", "1.4"]
+        ],
+        sectorAgricola: [
+            ["Producto", "Producción Agrícola (Toneladas)"],
+            ["Maíz", "500000"],
+            ["Trigo", "450000"],
+            ["Frijol", "300000"],
+            ["Sorgo", "250000"],
+            ["Caña de Azúcar", "200000"]
+        ],
+        sectorMineria: [
+            ["Metal", "Producción Minera (Toneladas)"],
+            ["Cobre", "80000"],
+            ["Oro", "5000"],
+            ["Plata", "3000"],
+            ["Zinc", "40000"],
+            ["Plomo", "35000"]
+        ],
+        sectorEnergia: [
+            ["Tipo de Energía", "Capacidad Instalada (MW)"],
+            ["Solar", "1500"],
+            ["Eólica", "800"],
+            ["Hidroeléctrica", "500"],
+            ["Biomasa", "300"],
+            ["Geotérmica", "100"]
+        ]
+    };
+
+    if (!data[chartId]) {
+        alert("Datos no disponibles para la descarga.");
+        return;
+    }
+
+    let csvContent = "data:text/csv;charset=utf-8,";
+    data[chartId].forEach(function(rowArray) {
+        let row = rowArray.join(",");
+        csvContent += row + "\r\n";
+    });
+
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", chartId + ".csv");
+    document.body.appendChild(link); // Requerido para Firefox
+
+    link.click();
+    document.body.removeChild(link);
+}
+
 // Función para inicializar todo
 function init() {
+    console.log("Inicializando la página...");
     initTyped();
-    animarKPIs();
-    initCharts();
+
+    // Animar KPIs y gráficas al hacer scroll utilizando AOS
+    // AOS ya está inicializado en el HTML, pero aseguramos que los eventos sean manejados
+    document.addEventListener('aos:in', ({ detail }) => {
+        const element = detail.target;
+        // Verificar si el elemento es un KPI
+        if (element.classList.contains('kpi-card')) {
+            const kpiNumber = element.querySelector('.kpi-number');
+            if (kpiNumber && !kpiNumber.getAttribute('data-animated')) {
+                // Iniciar animación de KPI
+                animarKPIs();
+            }
+        }
+
+        // Verificar si el elemento es una gráfica
+        if (element.classList.contains('chart-container')) {
+            const canvas = element.querySelector('canvas');
+            if (canvas && !canvas.dataset.initialized) {
+                // Inicializar la gráfica correspondiente
+                initCharts();
+            }
+        }
+    });
+
+    // Inicializar el mapa
     initMap();
+
+    // Manejar el formulario de contacto si existe
     handleContactForm();
+    console.log("Inicialización completada.");
 }
 
 // Ejecutar la función de inicialización cuando el DOM esté cargado

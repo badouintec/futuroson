@@ -1,92 +1,129 @@
 /* styles.css */
 
+/* Importar fuentes de Google Fonts (Montserrat ya incluido en el HTML) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+/* Variables CSS para una paleta de colores consistente */
+:root {
+    --color-primary: #0d6efd; /* Azul Bootstrap */
+    --color-secondary: #6c757d; /* Gris Bootstrap */
+    --color-light: #f8f9fa; /* Blanco Bootstrap */
+    --color-dark: #343a40; /* Gris oscuro Bootstrap */
+    --color-success: #198754;
+    --color-danger: #dc3545;
+    --color-warning: #ffc107;
+    --color-info: #0dcaf0;
+    --font-family: 'Montserrat', sans-serif;
+}
+
 /* Estilos generales */
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-family);
     line-height: 1.6;
-    color: #333333;
+    color: var(--color-dark);
+    background-color: var(--color-light);
+    margin: 0;
+    padding: 0;
 }
 
 a {
     text-decoration: none;
     color: inherit;
+    transition: color 0.3s;
 }
 
 a:hover {
-    text-decoration: none;
-    color: #0d6efd;
+    color: var(--color-primary);
 }
 
-/* Estilos para la sección Hero */
-.hero-section {
-    position: relative;
-    height: 100vh;
+/* Estilos para la barra de navegación */
+.navbar {
+    padding: 1rem 0;
+}
+
+.navbar-brand img {
+    border-radius: 50%;
+}
+
+.navbar-nav .nav-link {
+    margin-left: 1rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:hover {
+    color: var(--color-primary);
+}
+
+/* Estilos para la sección de Indicadores Económicos */
+.kpi-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    text-align: center;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Superposición oscura */
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-    padding: 0 15px;
-}
-
-.hero-content h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-}
-
-.hero-content p {
-    font-size: 1.25rem;
-    margin-bottom: 30px;
-}
-
-.hero-content .btn {
-    padding: 10px 30px;
-    font-size: 1rem;
-}
-
-/* Estilos para los KPIs */
 .kpi-card {
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
     background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .kpi-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.kpi-card i {
-    color: #0d6efd;
+.kpi-icon {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: 10px;
 }
 
-.kpi-card h5 {
-    margin-bottom: 15px;
-    font-size: 1.25rem;
-    color: #333333;
-}
-
-.kpi-card .kpi-number {
+.kpi-number {
     font-size: 2rem;
-    font-weight: bold;
-    color: #0d6efd;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 5px;
+}
+
+.kpi-label {
+    font-size: 1rem;
+    color: var(--color-secondary);
+}
+
+/* Estilos para las narrativas y fuentes */
+.narrative {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: var(--color-dark);
+}
+
+.source {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--color-secondary);
+}
+
+/* Estilos para los botones de descarga */
+.download-btn {
+    margin-top: 15px;
+    padding: 10px 25px;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #ffffff;
 }
 
 /* Estilos para las gráficas */
@@ -94,102 +131,47 @@ a:hover {
     position: relative;
     height: 400px;
     width: 100%;
-}
-
-/* Estilos para las tarjetas de Sectores Clave y Cultura y Turismo */
-.sector-card, .atractivo-card {
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
     background-color: #ffffff;
-    transition: transform 0.3s, box-shadow 0.3s;
-    height: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s;
 }
 
-.sector-card:hover, .atractivo-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+.chart-container:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.sector-card img, .atractivo-card img {
+/* Estilos para la sección del mapa */
+.map-section {
+    padding: 60px 0;
+}
+
+#map {
     width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-
-.sector-card h4, .atractivo-card h5 {
-    margin-top: 15px;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-    color: #333333;
-}
-
-.sector-card p, .atractivo-card p {
-    font-size: 1rem;
-    color: #555555;
-}
-
-.sector-card .btn, .atractivo-card .btn {
-    margin-top: 10px;
-    padding: 8px 20px;
-    font-size: 0.95rem;
-}
-
-/* Estilos para el botón "Ver más" */
-.text-center .btn-outline-primary {
-    border-width: 2px;
-    color: #0d6efd;
-    border-color: #0d6efd;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.text-center .btn-outline-primary:hover {
-    background-color: #0d6efd;
-    color: #ffffff;
-}
-
-/* Estilos para las Redes Sociales */
-.social-icons a {
-    color: #ffffff;
-    transition: color 0.3s;
-}
-
-.social-icons a:hover {
-    color: #0d6efd;
-}
-
-/* Estilos para el Formulario de Contacto */
-#contactForm {
-    background-color: #ffffff;
-    padding: 30px;
+    height: 500px;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
 }
 
-#contactForm .form-label {
-    font-weight: bold;
-    color: #333333;
+#map:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-#contactForm .btn-primary {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-    transition: background-color 0.3s, border-color 0.3s;
+/* Estilos para los filtros del mapa */
+.filter-container {
+    margin-bottom: 15px;
 }
 
-#contactForm .btn-primary:hover {
-    background-color: #0b5ed7;
-    border-color: #0a58ca;
-}
-
-/* Estilos para el mensaje de formulario */
-#formMessage {
-    font-size: 1rem;
+.filter-checkbox {
+    margin-right: 10px;
+    transform: scale(1.2);
 }
 
 /* Estilos para el Pie de Página */
 footer {
-    background-color: #343a40;
+    background-color: var(--color-dark);
     color: #ffffff;
 }
 
@@ -199,20 +181,66 @@ footer p {
 }
 
 /* Responsividad */
+@media (max-width: 992px) {
+    .kpi-container {
+        flex-direction: column;
+    }
+
+    .chart-container {
+        height: 300px;
+    }
+
+    #map {
+        height: 400px;
+    }
+}
+
 @media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 2.5rem;
+    .kpi-icon {
+        font-size: 2rem;
     }
 
-    .hero-content p {
-        font-size: 1rem;
+    .kpi-number {
+        font-size: 1.75rem;
     }
 
-    .kpi-card .kpi-number {
+    .kpi-label {
+        font-size: 0.95rem;
+    }
+
+    .chart-container {
+        height: 250px;
+    }
+
+    #map {
+        height: 350px;
+    }
+
+    .navbar-nav .nav-link {
+        margin-left: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .download-btn {
+        padding: 8px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .kpi-number {
         font-size: 1.5rem;
     }
 
-    .sector-card h4, .atractivo-card h5 {
-        font-size: 1.25rem;
+    .chart-container {
+        height: 200px;
+    }
+
+    #map {
+        height: 300px;
+    }
+
+    .kpi-icon {
+        font-size: 1.75rem;
     }
 }

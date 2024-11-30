@@ -18,65 +18,11 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-sA+ePHlfwLVEJUGkqYtB8TVssNKb+2JlQ8o7H3u36Mw="
           crossorigin=""/>
+    <!-- Enlace a Leaflet.markercluster CSS para clustering de marcadores -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <!-- Enlace al archivo CSS personalizado -->
     <link rel="stylesheet" href="styles.css">
-    <style>
-        /* Estilos adicionales para el mapa */
-        #map {
-            width: 100%;
-            height: 500px;
-            border-radius: 10px;
-            margin-top: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        /* Estilos para las gráficas */
-        .chart-container {
-            position: relative;
-            height: 400px;
-            width: 100%;
-            margin-bottom: 50px;
-        }
-        /* Estilos para las secciones completas */
-        .full-section {
-            min-height: 100vh;
-            padding: 60px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .kpi-container {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-            margin-bottom: 30px;
-        }
-        .kpi {
-            text-align: center;
-        }
-        .kpi .kpi-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #007bff;
-        }
-        .kpi .label {
-            font-size: 1.2rem;
-            margin-top: 5px;
-        }
-        .narrative {
-            max-width: 800px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .source {
-            font-size: 0.9rem;
-            color: #6c757d;
-            margin-bottom: 20px;
-        }
-        .download-btn {
-            margin-top: 10px;
-        }
-    </style>
 </head>
 <body>
     <!-- Barra de navegación -->
@@ -124,252 +70,365 @@
 
     <!-- Secciones individuales para cada gráfica con KPIs, narrativa, fuente y botón de descarga -->
     <!-- Gráfica 1: PIB -->
-    <section class="full-section bg-light" id="pib-section" data-aos="fade-up">
-        <div class="container">
-            <div class="kpi-container">
-                <div class="kpi">
-                    <div class="kpi-number" data-target="35000" data-unit=" M USD">0</div>
-                    <div class="label">PIB</div>
+    <section class="py-4">
+        <div class="container" data-aos="fade-up">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda: KPIs y Narrativa -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="kpi-container">
+                        <div class="kpi-card" data-aos="fade-right">
+                            <i class="fas fa-chart-line kpi-icon"></i>
+                            <div class="kpi-number" data-target="35000" data-unit=" M USD">0</div>
+                            <div class="kpi-label">PIB</div>
+                        </div>
+                        <!-- Puedes añadir más KPIs si es necesario -->
+                    </div>
+                    <div class="narrative" data-aos="fade-left" data-aos-delay="200">
+                        <p>El Producto Interno Bruto (PIB) de Sonora ha mostrado un crecimiento constante en los últimos años, reflejando la solidez de su economía.</p>
+                    </div>
+                    <div class="source" data-aos="fade-left" data-aos-delay="400">
+                        Fuente: Instituto Nacional de Estadística y Geografía (INEGI)
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadCSV('pib')" data-aos="fade-left" data-aos-delay="600">
+                        <i class="fas fa-download"></i> Descargar Tabla en CSV
+                    </button>
                 </div>
-                <!-- Puedes añadir más KPIs si es necesario -->
+                <!-- Columna Derecha: Gráfica -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="chart-container" data-aos="fade-left">
+                        <canvas id="pibChart"></canvas>
+                    </div>
+                </div>
             </div>
-            <div class="chart-container">
-                <canvas id="pibChart"></canvas>
-            </div>
-            <div class="narrative">
-                <p>El Producto Interno Bruto (PIB) de Sonora ha mostrado un crecimiento constante en los últimos años, reflejando la solidez de su economía.</p>
-            </div>
-            <div class="source">
-                Fuente: Instituto Nacional de Estadística y Geografía (INEGI)
-            </div>
-            <button class="btn btn-primary download-btn" onclick="downloadCSV('pib')">
-                <i class="fas fa-download"></i> Descargar Tabla en CSV
-            </button>
         </div>
     </section>
 
     <!-- Gráfica 2: Desempleo -->
-    <section class="full-section" id="desempleo-section" data-aos="fade-up">
-        <div class="container">
-            <div class="kpi-container">
-                <div class="kpi">
-                    <div class="kpi-number" data-target="4.5" data-unit="%">0</div>
-                    <div class="label">Desempleo</div>
+    <section class="py-4 bg-light">
+        <div class="container" data-aos="fade-up">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda: KPIs y Narrativa -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="kpi-container">
+                        <div class="kpi-card" data-aos="fade-right">
+                            <i class="fas fa-user-minus kpi-icon"></i>
+                            <div class="kpi-number" data-target="4.5" data-unit="%">0</div>
+                            <div class="kpi-label">Desempleo</div>
+                        </div>
+                        <!-- Puedes añadir más KPIs si es necesario -->
+                    </div>
+                    <div class="narrative" data-aos="fade-left" data-aos-delay="200">
+                        <p>La tasa de desempleo en Sonora ha disminuido significativamente, indicando una mejora en el mercado laboral local.</p>
+                    </div>
+                    <div class="source" data-aos="fade-left" data-aos-delay="400">
+                        Fuente: Secretaría del Trabajo y Previsión Social
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadCSV('desempleo')" data-aos="fade-left" data-aos-delay="600">
+                        <i class="fas fa-download"></i> Descargar Tabla en CSV
+                    </button>
                 </div>
-                <!-- Puedes añadir más KPIs si es necesario -->
+                <!-- Columna Derecha: Gráfica -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="chart-container" data-aos="fade-left">
+                        <canvas id="desempleoChart"></canvas>
+                    </div>
+                </div>
             </div>
-            <div class="chart-container">
-                <canvas id="desempleoChart"></canvas>
-            </div>
-            <div class="narrative">
-                <p>La tasa de desempleo en Sonora ha disminuido significativamente, indicando una mejora en el mercado laboral local.</p>
-            </div>
-            <div class="source">
-                Fuente: Secretaría del Trabajo y Previsión Social
-            </div>
-            <button class="btn btn-primary download-btn" onclick="downloadCSV('desempleo')">
-                <i class="fas fa-download"></i> Descargar Tabla en CSV
-            </button>
         </div>
     </section>
 
     <!-- Gráfica 3: Inversión -->
-    <section class="full-section bg-light" id="inversion-section" data-aos="fade-up">
-        <div class="container">
-            <div class="kpi-container">
-                <div class="kpi">
-                    <div class="kpi-number" data-target="6000" data-unit=" M USD">0</div>
-                    <div class="label">Inversión Extranjera Directa</div>
+    <section class="py-4">
+        <div class="container" data-aos="fade-up">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda: KPIs y Narrativa -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="kpi-container">
+                        <div class="kpi-card" data-aos="fade-right">
+                            <i class="fas fa-money-bill-wave kpi-icon"></i>
+                            <div class="kpi-number" data-target="6000" data-unit=" M USD">0</div>
+                            <div class="kpi-label">Inversión Extranjera Directa</div>
+                        </div>
+                        <!-- Puedes añadir más KPIs si es necesario -->
+                    </div>
+                    <div class="narrative" data-aos="fade-left" data-aos-delay="200">
+                        <p>La inversión en Sonora ha crecido en sectores clave, impulsando el desarrollo económico regional.</p>
+                    </div>
+                    <div class="source" data-aos="fade-left" data-aos-delay="400">
+                        Fuente: Secretaría de Economía de Sonora
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadCSV('inversion')" data-aos="fade-left" data-aos-delay="600">
+                        <i class="fas fa-download"></i> Descargar Tabla en CSV
+                    </button>
+                </div>
+                <!-- Columna Derecha: Gráfica -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="chart-container" data-aos="fade-left">
+                        <canvas id="inversionChart"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="chart-container">
-                <canvas id="inversionChart"></canvas>
-            </div>
-            <div class="narrative">
-                <p>La inversión en Sonora ha crecido en sectores clave, impulsando el desarrollo económico regional.</p>
-            </div>
-            <div class="source">
-                Fuente: Secretaría de Economía de Sonora
-            </div>
-            <button class="btn btn-primary download-btn" onclick="downloadCSV('inversion')">
-                <i class="fas fa-download"></i> Descargar Tabla en CSV
-            </button>
         </div>
     </section>
 
     <!-- Gráfica 4: Exportaciones -->
-    <section class="full-section" id="exportaciones-section" data-aos="fade-up">
-        <div class="container">
-            <div class="kpi-container">
-                <div class="kpi">
-                    <div class="kpi-number" data-target="50000" data-unit=" M USD">0</div>
-                    <div class="label">Exportaciones</div>
+    <section class="py-4 bg-light">
+        <div class="container" data-aos="fade-up">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda: KPIs y Narrativa -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="kpi-container">
+                        <div class="kpi-card" data-aos="fade-right">
+                            <i class="fas fa-shipping-fast kpi-icon"></i>
+                            <div class="kpi-number" data-target="50000" data-unit=" M USD">0</div>
+                            <div class="kpi-label">Exportaciones</div>
+                        </div>
+                        <!-- Puedes añadir más KPIs si es necesario -->
+                    </div>
+                    <div class="narrative" data-aos="fade-left" data-aos-delay="200">
+                        <p>Las exportaciones de Sonora han alcanzado nuevos máximos, consolidando su posición en el comercio internacional.</p>
+                    </div>
+                    <div class="source" data-aos="fade-left" data-aos-delay="400">
+                        Fuente: Secretaría de Comercio Exterior
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadCSV('exportaciones')" data-aos="fade-left" data-aos-delay="600">
+                        <i class="fas fa-download"></i> Descargar Tabla en CSV
+                    </button>
+                </div>
+                <!-- Columna Derecha: Gráfica -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="chart-container" data-aos="fade-left">
+                        <canvas id="exportacionesChart"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="chart-container">
-                <canvas id="exportacionesChart"></canvas>
-            </div>
-            <div class="narrative">
-                <p>Las exportaciones de Sonora han alcanzado nuevos máximos, consolidando su posición en el comercio internacional.</p>
-            </div>
-            <div class="source">
-                Fuente: Secretaría de Comercio Exterior
-            </div>
-            <button class="btn btn-primary download-btn" onclick="downloadCSV('exportaciones')">
-                <i class="fas fa-download"></i> Descargar Tabla en CSV
-            </button>
         </div>
     </section>
 
     <!-- Gráfica 5: Importaciones -->
-    <section class="full-section bg-light" id="importaciones-section" data-aos="fade-up">
-        <div class="container">
-            <div class="kpi-container">
-                <div class="kpi">
-                    <div class="kpi-number" data-target="40000" data-unit=" M USD">0</div>
-                    <div class="label">Importaciones</div>
+    <section class="py-4">
+        <div class="container" data-aos="fade-up">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda: KPIs y Narrativa -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="kpi-container">
+                        <div class="kpi-card" data-aos="fade-right">
+                            <i class="fas fa-box-open kpi-icon"></i>
+                            <div class="kpi-number" data-target="40000" data-unit=" M USD">0</div>
+                            <div class="kpi-label">Importaciones</div>
+                        </div>
+                        <!-- Puedes añadir más KPIs si es necesario -->
+                    </div>
+                    <div class="narrative" data-aos="fade-left" data-aos-delay="200">
+                        <p>Las importaciones en Sonora han crecido en sectores estratégicos, apoyando el desarrollo de la industria local.</p>
+                    </div>
+                    <div class="source" data-aos="fade-left" data-aos-delay="400">
+                        Fuente: Secretaría de Comercio Exterior
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadCSV('importaciones')" data-aos="fade-left" data-aos-delay="600">
+                        <i class="fas fa-download"></i> Descargar Tabla en CSV
+                    </button>
+                </div>
+                <!-- Columna Derecha: Gráfica -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="chart-container" data-aos="fade-left">
+                        <canvas id="importacionesChart"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="chart-container">
-                <canvas id="importacionesChart"></canvas>
-            </div>
-            <div class="narrative">
-                <p>Las importaciones en Sonora han crecido en sectores estratégicos, apoyando el desarrollo de la industria local.</p>
-            </div>
-            <div class="source">
-                Fuente: Secretaría de Comercio Exterior
-            </div>
-            <button class="btn btn-primary download-btn" onclick="downloadCSV('importaciones')">
-                <i class="fas fa-download"></i> Descargar Tabla en CSV
-            </button>
         </div>
     </section>
 
     <!-- Gráfica 6: Nueva Empresarial -->
-    <section class="full-section" id="nuevaEmpresarial-section" data-aos="fade-up">
-        <div class="container">
-            <div class="kpi-container">
-                <div class="kpi">
-                    <div class="kpi-number" data-target="1800" data-unit="">0</div>
-                    <div class="label">Nuevas Empresas</div>
+    <section class="py-4 bg-light">
+        <div class="container" data-aos="fade-up">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda: KPIs y Narrativa -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="kpi-container">
+                        <div class="kpi-card" data-aos="fade-right">
+                            <i class="fas fa-briefcase kpi-icon"></i>
+                            <div class="kpi-number" data-target="1800" data-unit="">0</div>
+                            <div class="kpi-label">Nuevas Empresas</div>
+                        </div>
+                        <!-- Puedes añadir más KPIs si es necesario -->
+                    </div>
+                    <div class="narrative" data-aos="fade-left" data-aos-delay="200">
+                        <p>El sector empresarial en Sonora está experimentando un auge con la creación de nuevas empresas y startups innovadoras.</p>
+                    </div>
+                    <div class="source" data-aos="fade-left" data-aos-delay="400">
+                        Fuente: Secretaría de Desarrollo Económico
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadCSV('nuevaEmpresarial')" data-aos="fade-left" data-aos-delay="600">
+                        <i class="fas fa-download"></i> Descargar Tabla en CSV
+                    </button>
+                </div>
+                <!-- Columna Derecha: Gráfica -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="chart-container" data-aos="fade-left">
+                        <canvas id="nuevaEmpresarialChart"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="chart-container">
-                <canvas id="nuevaEmpresarialChart"></canvas>
-            </div>
-            <div class="narrative">
-                <p>El sector empresarial en Sonora está experimentando un auge con la creación de nuevas empresas y startups innovadoras.</p>
-            </div>
-            <div class="source">
-                Fuente: Secretaría de Desarrollo Económico
-            </div>
-            <button class="btn btn-primary download-btn" onclick="downloadCSV('nuevaEmpresarial')">
-                <i class="fas fa-download"></i> Descargar Tabla en CSV
-            </button>
         </div>
     </section>
 
     <!-- Gráfica 7: Crecimiento Poblacional -->
-    <section class="full-section bg-light" id="crecimientoPoblacional-section" data-aos="fade-up">
-        <div class="container">
-            <div class="kpi-container">
-                <div class="kpi">
-                    <div class="kpi-number" data-target="2.5" data-unit="%">0</div>
-                    <div class="label">Crecimiento Poblacional</div>
+    <section class="py-4">
+        <div class="container" data-aos="fade-up">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda: KPIs y Narrativa -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="kpi-container">
+                        <div class="kpi-card" data-aos="fade-right">
+                            <i class="fas fa-users kpi-icon"></i>
+                            <div class="kpi-number" data-target="2.5" data-unit="%">0</div>
+                            <div class="kpi-label">Crecimiento Poblacional</div>
+                        </div>
+                        <!-- Puedes añadir más KPIs si es necesario -->
+                    </div>
+                    <div class="narrative" data-aos="fade-left" data-aos-delay="200">
+                        <p>El crecimiento poblacional en Sonora refleja una migración positiva hacia la región, impulsando la demanda de servicios y vivienda.</p>
+                    </div>
+                    <div class="source" data-aos="fade-left" data-aos-delay="400">
+                        Fuente: Instituto Nacional de Estadística y Geografía (INEGI)
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadCSV('crecimientoPoblacional')" data-aos="fade-left" data-aos-delay="600">
+                        <i class="fas fa-download"></i> Descargar Tabla en CSV
+                    </button>
+                </div>
+                <!-- Columna Derecha: Gráfica -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="chart-container" data-aos="fade-left">
+                        <canvas id="crecimientoPoblacionalChart"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="chart-container">
-                <canvas id="crecimientoPoblacionalChart"></canvas>
-            </div>
-            <div class="narrative">
-                <p>El crecimiento poblacional en Sonora refleja una migración positiva hacia la región, impulsando la demanda de servicios y vivienda.</p>
-            </div>
-            <div class="source">
-                Fuente: Instituto Nacional de Estadística y Geografía (INEGI)
-            </div>
-            <button class="btn btn-primary download-btn" onclick="downloadCSV('crecimientoPoblacional')">
-                <i class="fas fa-download"></i> Descargar Tabla en CSV
-            </button>
         </div>
     </section>
 
     <!-- Gráfica 8: Sector Agrícola -->
-    <section class="full-section" id="sectorAgricola-section" data-aos="fade-up">
-        <div class="container">
-            <div class="kpi-container">
-                <div class="kpi">
-                    <div class="kpi-number" data-target="300000" data-unit=" Toneladas">0</div>
-                    <div class="label">Sector Agrícola</div>
+    <section class="py-4 bg-light">
+        <div class="container" data-aos="fade-up">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda: KPIs y Narrativa -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="kpi-container">
+                        <div class="kpi-card" data-aos="fade-right">
+                            <i class="fas fa-seedling kpi-icon"></i>
+                            <div class="kpi-number" data-target="300000" data-unit=" Toneladas">0</div>
+                            <div class="kpi-label">Sector Agrícola</div>
+                        </div>
+                        <!-- Puedes añadir más KPIs si es necesario -->
+                    </div>
+                    <div class="narrative" data-aos="fade-left" data-aos-delay="200">
+                        <p>El sector agrícola de Sonora continúa siendo un pilar fundamental de la economía, con avances en tecnología y sostenibilidad.</p>
+                    </div>
+                    <div class="source" data-aos="fade-left" data-aos-delay="400">
+                        Fuente: Secretaría de Agricultura
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadCSV('sectorAgricola')" data-aos="fade-left" data-aos-delay="600">
+                        <i class="fas fa-download"></i> Descargar Tabla en CSV
+                    </button>
+                </div>
+                <!-- Columna Derecha: Gráfica -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="chart-container" data-aos="fade-left">
+                        <canvas id="sectorAgricolaChart"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="chart-container">
-                <canvas id="sectorAgricolaChart"></canvas>
-            </div>
-            <div class="narrative">
-                <p>El sector agrícola de Sonora continúa siendo un pilar fundamental de la economía, con avances en tecnología y sostenibilidad.</p>
-            </div>
-            <div class="source">
-                Fuente: Secretaría de Agricultura
-            </div>
-            <button class="btn btn-primary download-btn" onclick="downloadCSV('sectorAgricola')">
-                <i class="fas fa-download"></i> Descargar Tabla en CSV
-            </button>
         </div>
     </section>
 
     <!-- Gráfica 9: Sector Minería -->
-    <section class="full-section bg-light" id="sectorMineria-section" data-aos="fade-up">
-        <div class="container">
-            <div class="kpi-container">
-                <div class="kpi">
-                    <div class="kpi-number" data-target="35000" data-unit=" Toneladas">0</div>
-                    <div class="label">Sector Minería</div>
+    <section class="py-4">
+        <div class="container" data-aos="fade-up">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda: KPIs y Narrativa -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="kpi-container">
+                        <div class="kpi-card" data-aos="fade-right">
+                            <i class="fas fa-hammer kpi-icon"></i>
+                            <div class="kpi-number" data-target="35000" data-unit=" Toneladas">0</div>
+                            <div class="kpi-label">Sector Minería</div>
+                        </div>
+                        <!-- Puedes añadir más KPIs si es necesario -->
+                    </div>
+                    <div class="narrative" data-aos="fade-left" data-aos-delay="200">
+                        <p>El sector de minería en Sonora sigue siendo clave, con nuevas inversiones y proyectos que potencian la economía local.</p>
+                    </div>
+                    <div class="source" data-aos="fade-left" data-aos-delay="400">
+                        Fuente: Secretaría de Minas
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadCSV('sectorMineria')" data-aos="fade-left" data-aos-delay="600">
+                        <i class="fas fa-download"></i> Descargar Tabla en CSV
+                    </button>
+                </div>
+                <!-- Columna Derecha: Gráfica -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="chart-container" data-aos="fade-left">
+                        <canvas id="sectorMineriaChart"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="chart-container">
-                <canvas id="sectorMineriaChart"></canvas>
-            </div>
-            <div class="narrative">
-                <p>El sector de minería en Sonora sigue siendo clave, con nuevas inversiones y proyectos que potencian la economía local.</p>
-            </div>
-            <div class="source">
-                Fuente: Secretaría de Minas
-            </div>
-            <button class="btn btn-primary download-btn" onclick="downloadCSV('sectorMineria')">
-                <i class="fas fa-download"></i> Descargar Tabla en CSV
-            </button>
         </div>
     </section>
 
     <!-- Gráfica 10: Sector Energía -->
-    <section class="full-section" id="sectorEnergia-section" data-aos="fade-up">
-        <div class="container">
-            <div class="kpi-container">
-                <div class="kpi">
-                    <div class="kpi-number" data-target="4000" data-unit=" MW">0</div>
-                    <div class="label">Sector Energía</div>
+    <section class="py-4 bg-light">
+        <div class="container" data-aos="fade-up">
+            <div class="row align-items-center">
+                <!-- Columna Izquierda: KPIs y Narrativa -->
+                <div class="col-lg-4 col-md-5 mb-4 mb-md-0">
+                    <div class="kpi-container">
+                        <div class="kpi-card" data-aos="fade-right">
+                            <i class="fas fa-bolt kpi-icon"></i>
+                            <div class="kpi-number" data-target="4000" data-unit=" MW">0</div>
+                            <div class="kpi-label">Sector Energía</div>
+                        </div>
+                        <!-- Puedes añadir más KPIs si es necesario -->
+                    </div>
+                    <div class="narrative" data-aos="fade-left" data-aos-delay="200">
+                        <p>El sector energético en Sonora está en expansión, con proyectos de energías renovables que contribuyen a un futuro sostenible.</p>
+                    </div>
+                    <div class="source" data-aos="fade-left" data-aos-delay="400">
+                        Fuente: Secretaría de Energía
+                    </div>
+                    <button class="btn btn-primary download-btn" onclick="downloadCSV('sectorEnergia')" data-aos="fade-left" data-aos-delay="600">
+                        <i class="fas fa-download"></i> Descargar Tabla en CSV
+                    </button>
+                </div>
+                <!-- Columna Derecha: Gráfica -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="chart-container" data-aos="fade-left">
+                        <canvas id="sectorEnergiaChart"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="chart-container">
-                <canvas id="sectorEnergiaChart"></canvas>
-            </div>
-            <div class="narrative">
-                <p>El sector energético en Sonora está en expansión, con proyectos de energías renovables que contribuyen a un futuro sostenible.</p>
-            </div>
-            <div class="source">
-                Fuente: Secretaría de Energía
-            </div>
-            <button class="btn btn-primary download-btn" onclick="downloadCSV('sectorEnergia')">
-                <i class="fas fa-download"></i> Descargar Tabla en CSV
-            </button>
         </div>
     </section>
 
     <!-- Mapa Interactivo -->
-    <section class="full-section bg-light" id="map-section" data-aos="fade-up">
-        <div class="container">
-            <h3 class="text-center mb-3">Mapa de Oportunidades en Sonora</h3>
-            <div id="map"></div>
+    <section class="map-section bg-light">
+        <div class="container" data-aos="fade-up">
+            <h3 class="text-center mb-4">Mapa de Oportunidades en Sonora</h3>
+            <!-- Contenedor para los filtros del mapa -->
+            <div class="filter-container text-center mb-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input filter-checkbox" type="checkbox" id="filterInversion" value="inversion" checked>
+                    <label class="form-check-label" for="filterInversion">Inversión</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input filter-checkbox" type="checkbox" id="filterExportaciones" value="exportaciones" checked>
+                    <label class="form-check-label" for="filterExportaciones">Exportaciones</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input filter-checkbox" type="checkbox" id="filterImportaciones" value="importaciones" checked>
+                    <label class="form-check-label" for="filterImportaciones">Importaciones</label>
+                </div>
+            </div>
+            <div id="map" data-aos="fade-up" data-aos-delay="400"></div>
         </div>
     </section>
 
@@ -393,13 +452,18 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-o9N1jz0zFJ0pB5q0LF8a3TXhPzJzYhG74TtY6u7gD4M="
             crossorigin=""></script>
-    <!-- Enlace a CountUp.js para animar KPIs (si se utiliza, pero ahora se usa main.js) -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script> -->
+    <!-- Enlace a Leaflet.markercluster para clustering de marcadores -->
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <!-- Enlace al archivo JavaScript principal -->
     <script src="main.js"></script>
     <!-- Inicializar AOS -->
     <script>
-        AOS.init();
+        AOS.init({
+            duration: 800, // Duración de las animaciones
+            easing: 'ease-in-out', // Tipo de animación
+            once: false, // Animar cada vez que se hace scroll
+            mirror: true // Animar al hacer scroll hacia arriba
+        });
     </script>
 </body>
 </html>
