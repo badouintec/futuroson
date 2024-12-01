@@ -14,6 +14,16 @@
     --color-warning: #ffc107;
     --color-info: #0dcaf0;
     --font-family: 'Montserrat', sans-serif;
+    --transition-speed: 0.3s;
+    --border-radius: 8px;
+    --box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Reset y estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Estilos generales */
@@ -22,14 +32,13 @@ body {
     line-height: 1.6;
     color: var(--color-dark);
     background-color: var(--color-light);
-    margin: 0;
-    padding: 0;
+    padding-top: 60px; /* Espacio para navbar fixed */
 }
 
 a {
     text-decoration: none;
     color: inherit;
-    transition: color 0.3s;
+    transition: color var(--transition-speed);
 }
 
 a:hover {
@@ -58,42 +67,40 @@ a:hover {
 
 /* Estilos para la sección de Indicadores Económicos */
 .kpi-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .kpi-card {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    padding: 25px;
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform var(--transition-speed);
 }
 
 .kpi-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .kpi-icon {
     font-size: 2.5rem;
-    color: var(--color-primary);
+    color: #007bff;
     margin-bottom: 10px;
 }
 
 .kpi-number {
     font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-dark);
-    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--color-primary);
+    margin: 1rem 0;
 }
 
 .kpi-label {
-    font-size: 1rem;
-    color: var(--color-secondary);
+    font-size: 1.2rem;
+    color: #6c757d;
 }
 
 /* Estilos para las narrativas y fuentes */
@@ -101,23 +108,31 @@ a:hover {
     margin-top: 15px;
     font-size: 1rem;
     color: var(--color-dark);
+    margin-bottom: 20px;
 }
 
 .source {
     margin-top: 10px;
     font-size: 0.85rem;
     color: var(--color-secondary);
+    margin-bottom: 20px;
 }
 
 /* Estilos para los botones de descarga */
 .download-btn {
     margin-top: 15px;
-    padding: 10px 25px;
-    font-size: 0.95rem;
+    padding: 10px 20px;
+    font-size: 1rem;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    transition: background-color 0.3s, border-color 0.3s;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    border: 2px solid var(--color-primary);
+    background-color: transparent;
+    color: var(--color-primary);
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .download-btn:hover {
@@ -128,18 +143,18 @@ a:hover {
 
 /* Estilos para las gráficas */
 .chart-container {
-    position: relative;
-    height: 400px;
+    background: white;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 2rem;
+    min-height: 400px;
     width: 100%;
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.3s;
 }
 
-.chart-container:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+canvas {
+    max-width: 100%;
+    height: auto !important;
 }
 
 /* Estilos para la sección del mapa */
@@ -209,7 +224,7 @@ footer p {
     }
 
     .chart-container {
-        height: 250px;
+        min-height: 300px;
     }
 
     #map {
@@ -233,11 +248,15 @@ footer p {
     }
 
     .chart-container {
-        height: 200px;
+        min-height: 250px;
     }
 
     #map {
         height: 300px;
+    }
+
+    .kpi-container {
+        grid-template-columns: 1fr;
     }
 
     .kpi-icon {

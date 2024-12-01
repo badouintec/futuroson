@@ -340,5 +340,95 @@
             actualizarMapaYTabla();
         });
     </script>
+    <!-- main.js -->
+    <script>
+        // Función para animar los KPIs cuando entran en el viewport
+        function animarKPIs() {
+            const counters = document.querySelectorAll('.kpi-number');
+            counters.forEach(counter => {
+                // Verificar si ya se ha animado para evitar múltiples animaciones
+                if (counter.getAttribute('data-animated') === 'true') return;
+
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const unit = counter.getAttribute('data-unit') || '';
+                const duration = 2000; // Duración total de la animación en ms
+                const interval = 20; // Intervalo de actualización en ms
+                const steps = duration / interval;
+                const increment = target / steps;
+                let current = 0;
+
+                const updateCount = () => {
+                    current += increment;
+                    if (current < target) {
+                        // Para valores con decimales, ajustamos la precisión
+                        if (target % 1 !== 0) {
+                            counter.innerText = current.toFixed(2) + unit;
+                        } else {
+                            counter.innerText = Math.ceil(current) + unit;
+                        }
+                        setTimeout(updateCount, interval);
+                    } else {
+                        counter.innerText = target + unit;
+                        counter.setAttribute('data-animated', 'true');
+                    }
+                };
+
+                updateCount();
+            });
+        }
+
+        // Función para descargar CSV
+        function downloadCSV(type) {
+            // Lógica para descargar el CSV
+            const data = [
+                ["Indicador", "Valor"],
+                ["PIB", "35000 M USD"]
+            ];
+            let csvContent = "data:text/csv;charset=utf-8,";
+            data.forEach(row => {
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `${type}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Inicializar AOS
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init();
+            animarKPIs();
+            initializeChart();
+        });
+
+        // Función para inicializar el gráfico de Chart.js
+        function initializeChart() {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar', // Tipo de gráfico
+                data: {
+                    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+                    datasets: [{
+                        label: 'PIB Mensual (M USD)',
+                        data: [5000, 6000, 7000, 8000, 9000, 10000],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>

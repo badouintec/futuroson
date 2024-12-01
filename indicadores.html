@@ -9,15 +9,13 @@
     <!-- Enlace a Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Enlace a AOS para animaciones al hacer scroll -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <!-- Enlace a Font Awesome para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Enlace a Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Enlace a Leaflet CSS para el mapa -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-sA+ePHlfwLVEJUGkqYtB8TVssNKb+2JlQ8o7H3u36Mw="
-          crossorigin=""/>
+    <!-- Enlace a Leaflet CSS para el mapa (desde cdnjs) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" integrity="sha512-3DofP05c8nj7H/0NJ6+0NVK+n+Zj6iZ4Pu0H4hn+JLLgxI59Iy6LOksxG0vFXhBPmTx5usZY8gPJJ0Wdo3S4lA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Enlace a Leaflet.markercluster CSS para clustering de marcadores -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
@@ -46,15 +44,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="sectores.html">Sectores Clave</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cultura.html">Cultura y Turismo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="geovisor.html">Geovisor</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contacto.html">Contacto</a>
                     </li>
                 </ul>
             </div>
@@ -87,7 +76,7 @@
                         <p>El Producto Interno Bruto (PIB) de Sonora ha mostrado un crecimiento constante en los últimos años, reflejando la solidez de su economía.</p>
                     </div>
                     <div class="source" data-aos="fade-left" data-aos-delay="400">
-                        Fuente: Instituto Nacional de Estadística y Geografía (INEGI)
+                        <p>Fuente: Instituto Nacional de Estadística y Geografía (INEGI)</p>
                     </div>
                     <button class="btn btn-primary download-btn" onclick="downloadCSV('pib')" data-aos="fade-left" data-aos-delay="600">
                         <i class="fas fa-download"></i> Descargar Tabla en CSV
@@ -137,7 +126,7 @@
         </div>
     </section>
 
-    <!-- Gráfica 3: Inversión -->
+    <!-- Gráfica 3: Inversión Extranjera Directa -->
     <section class="py-4">
         <div class="container" data-aos="fade-up">
             <div class="row align-items-center">
@@ -239,7 +228,7 @@
         </div>
     </section>
 
-    <!-- Gráfica 6: Nueva Empresarial -->
+    <!-- Gráfica 6: Nuevas Empresas -->
     <section class="py-4 bg-light">
         <div class="container" data-aos="fade-up">
             <div class="row align-items-center">
@@ -448,10 +437,8 @@
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <!-- Enlace a Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Enlace a Leaflet JS para el mapa -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-            integrity="sha256-o9N1jz0zFJ0pB5q0LF8a3TXhPzJzYhG74TtY6u7gD4M="
-            crossorigin=""></script>
+    <!-- Enlace a Leaflet JS para el mapa (desde cdnjs) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js" integrity="sha512-nMMF81DGqwxcQWWFhtvZeGxzk1VRTvfHftFXQc8PYBIZgvyGfLQkqSpSBj17gkdDrECp3Dr/nlNnApneA8xREg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Enlace a Leaflet.markercluster para clustering de marcadores -->
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <!-- Enlace al archivo JavaScript principal -->
