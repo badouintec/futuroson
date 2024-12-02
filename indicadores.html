@@ -101,16 +101,20 @@
                     <div class="kpi-container">
                         <div class="kpi-card" data-aos="fade-right">
                             <i class="fas fa-user-minus kpi-icon"></i>
-                            <div class="kpi-number" data-target="4.5" data-unit="%">0</div>
-                            <div class="kpi-label">Desempleo</div>
+                            <div class="kpi-number" data-target="4.5" data-unit="%" data-animated="false">0</div>
+                            <div class="kpi-label">Tasa de Desempleo</div>
                         </div>
-                        <!-- Puedes añadir más KPIs si es necesario -->
+                        <div class="kpi-card" data-aos="fade-right" data-aos-delay="200">
+                            <i class="fas fa-users kpi-icon"></i>
+                            <div class="kpi-number" data-target="1500000" data-unit="" data-animated="false">0</div>
+                            <div class="kpi-label">Población Activa</div>
+                        </div>
                     </div>
                     <div class="narrative" data-aos="fade-left" data-aos-delay="200">
                         <p>La tasa de desempleo en Sonora ha disminuido significativamente, indicando una mejora en el mercado laboral local.</p>
                     </div>
                     <div class="source" data-aos="fade-left" data-aos-delay="400">
-                        Fuente: Secretaría del Trabajo y Previsión Social
+                        <p>Fuente: Secretaría del Trabajo y Previsión Social</p>
                     </div>
                     <button class="btn btn-primary download-btn" onclick="downloadCSV('desempleo')" data-aos="fade-left" data-aos-delay="600">
                         <i class="fas fa-download"></i> Descargar Tabla en CSV
