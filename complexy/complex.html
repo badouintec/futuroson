@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Metadatos básicos -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mexico in the Product Space, 2022</title>
+
+    <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Enlace a Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <!-- Inclusión de fuentes modernas -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap">
+
+    <!-- Incluir D3.js desde un CDN -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- Enlace al archivo JavaScript externo -->
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <!-- Encabezado superior -->
+        <header class="header">
+            <!-- Selectores de país y año -->
+            <div class="header__selectors">
+                <div class="selector">
+                    <label for="country-select">Country:</label>
+                    <select id="country-select" name="country">
+                        <option value="Mexico" selected>Mexico</option>
+                        <!-- Agregar más opciones si es necesario -->
+                    </select>
+                </div>
+                <div class="selector">
+                    <label for="year-select">Year:</label>
+                    <select id="year-select" name="year">
+                        <option value="2022" selected>2022</option>
+                        <!-- Agregar más opciones si es necesario -->
+                    </select>
+                </div>
+            </div>
+            <!-- Título principal centrado -->
+            <div class="header__center">
+                <h1 class="header__title">Mexico in the Product Space, 2022</h1>
+                <p class="header__total-value">Total Value: $488B</p>
+            </div>
+            <!-- Ícono de configuración -->
+            <div class="header__settings">
+                <button class="settings-button" title="Settings">
+                    <svg width="24" height="24" fill="#ecf0f1" viewBox="0 0 24 24">
+                        <path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5zm7-3.5c0-.65-.09-1.27-.24-1.87l2.11-1.65a.5.5 0 00-.05-.86l-2.5-1.44a.5.5 0 00-.66.16l-1.98 2.73A8.064 8.064 0 0012 7a8.07 8.07 0 00-2.68.47l-1.98-2.73a.501.501 0 00-.66-.16l-2.5 1.44a.5.5 0 00-.05.86l2.11 1.65c-.15.6-.24 1.22-.24 1.87s.09 1.27.24 1.87l-2.11 1.65a.5.5 0 00.05.86l2.5 1.44c.2.11.45.06.66-.16l1.98-2.73A8.064 8.064 0 0012 17a8.07 8.07 0 002.68-.47l1.98 2.73c.2.22.45.27.66.16l2.5-1.44a.5.5 0 00.05-.86l-2.11-1.65c.15-.6.24-1.22.24-1.87z"></path>
+                    </svg>
+                </button>
+            </div>
+        </header>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar sidebar--left">
+            <!-- Panel lateral izquierdo con menú -->
+            <aside class="sidebar sidebar--left">
+                <nav class="sidebar__nav">
+                    <!-- Título del menú -->
+                    <h2 class="sidebar__menu-title">Menu</h2>
+                    <!-- Botones del menú -->
+                    <button class="sidebar__button">
+                        <span class="sidebar__icon">&#128202;</span>
+                        Trade Composition
+                    </button>
+                    <button class="sidebar__button">
+                        <span class="sidebar__icon">&#128506;</span>
+                        Trade Map
+                    </button>
+                    <button class="sidebar__button">
+                        <span class="sidebar__icon">&#128200;</span>
+                        Trade Over Time
+                    </button>
+                    <button class="sidebar__button">
+                        <span class="sidebar__icon">&#127758;</span>
+                        Global Share
+                    </button>
+                    <button class="sidebar__button">
+                        <span class="sidebar__icon">&#128221;</span>
+                        Product Space
+                    </button>
+                    <button class="sidebar__button">
+                        <span class="sidebar__icon">&#128202;</span>
+                        Growth Opportunity
+                    </button>
+                </nav>
+                <!-- Botones inferiores -->
+                <div class="sidebar__bottom">
+                    <button class="sidebar__download" title="Download Data">
+                        <svg width="24" height="24" fill="#ecf0f1" viewBox="0 0 24 24">
+                            <path d="M5 20h14v-2H5v2zM12 18l-6-6h4V8h4v4h4l-6 6z"/>
+                        </svg>
+                    </button>
+                    <button class="sidebar__help" title="Help">
+                        <svg width="24" height="24" fill="#ecf0f1" viewBox="0 0 24 24">
+                            <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 10h2V5h-2v5zm0 2h2v2h-2v-2z"/>
+                        </svg>
+                    </button>
+                </div>
+            </aside>
+        </aside>
+
+        <main class="main-content">
+            <!-- Añadir el contenedor para el área del gráfico -->
+            <div class="graph-area">
+                <!-- SVG para el gráfico de nodos -->
+                <svg id="product-space"></svg>
+            </div>
+            <!-- Tooltip para mostrar información al pasar el cursor -->
+            <div class="tooltip" id="tooltip"></div>
+        </main>
+
+        <aside class="sidebar sidebar--right">
+            <!-- Panel flotante a la derecha con explicaciones -->
+            <aside class="sidebar sidebar--right">
+                <!-- Sección "How to Read" -->
+                <div class="sidebar__explanation">
+                    <h2 class="sidebar__subtitle">How to Read</h2>
+                    <p>Los nodos representan productos individuales. Los nodos cercanos requieren habilidades similares, mientras que los nodos distantes requieren capacidades distintas.</p>
+                    <!-- Imagen esquemática (puedes reemplazar esto con una imagen real si lo deseas) -->
+                    <img src="diagram.png" alt="Esquema de nodos" class="explanation__image">
+
+                    <!-- Leyenda de categorías -->
+                    <section class="legend">
+                        <h3 class="legend__title">Categories</h3>
+                        <div class="legend__item">
+                            <span class="legend__color" style="background-color: yellow;"></span>
+                            <span class="legend__label">Agricultural Goods</span>
+                        </div>
+                        <div class="legend__item">
+                            <span class="legend__color" style="background-color: brown;"></span>
+                            <span class="legend__label">Construction Goods</span>
+                        </div>
+                        <div class="legend__item">
+                            <span class="legend__color" style="background-color: blue;"></span>
+                            <span class="legend__label">Electronics</span>
+                        </div>
+                        <div class="legend__item">
+                            <span class="legend__color" style="background-color: green;"></span>
+                            <span class="legend__label">Apparel</span>
+                        </div>
+                        <!-- Agregar más categorías si es necesario -->
+                    </section>
+
+                    <!-- Leyenda del tamaño de los nodos -->
+                    <section class="legend-size">
+                        <h3 class="legend__title">Node Size</h3>
+                        <p>El tamaño de los nodos está basado en las exportaciones globales.</p>
+                    </section>
+
+                    <!-- Controles de zoom -->
+                    <section class="zoom-controls">
+                        <h3 class="zoom-controls__title">Zoom Controls</h3>
+                        <button id="zoom-in" class="zoom-controls__button">+ Zoom</button>
+                        <button id="zoom-out" class="zoom-controls__button">- Zoom</button>
+                        <button id="zoom-reset" class="zoom-controls__button">Reset Zoom</button>
+                    </section>
+                </div>
+            </aside>
+        </aside>
+    </div>
+
+    <div class="modal" id="modal">
+        <!-- Modal flotante para mostrar información detallada -->
+        <div class="modal" id="modal">
+            <div class="modal__content">
+                <!-- Botón de cierre del modal -->
+                <button class="modal__close" id="modal-close">&times;</button>
+                <!-- Título del modal -->
+                <h2 class="modal__title">Most Related Nearby Products</h2>
+                <div class="modal__body">
+                    <!-- Contenedor para el gráfico circular -->
+                    <div class="modal__graph">
+                        <!-- Puedes usar D3.js o SVG para crear este gráfico -->
+                        <!-- Por simplicidad, se coloca un contenedor aquí -->
+                        <svg id="modal-graph" width="200" height="200"></svg>
+                    </div>
+                    <!-- Tabla con información de productos relacionados -->
+                    <table class="modal__table">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Nearby Distance</th>
+                                <th>Product Complexity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modal-table-body">
+                            <!-- Filas generadas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
